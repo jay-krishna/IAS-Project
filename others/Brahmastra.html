@@ -110,7 +110,67 @@
 
 <Scheduler Manager:>
 	Who will Send Request:
-		1. 
+		1. Request Manager
+	
+	What Request:
+		1. Schedule User Service
+	
+	Input Format:
+		<User_id,Service_id,config>
+
+	Steps:
+		1. Parse the config file
+		2. Schedule the service as per user input
+		3. Send service start stop request to serviceLCM
+
+	Output:
+		1. Send Service Start/Stop request to ServiceLCM
+
+<Sensor Registration>
+	Who will send request:
+		1. Request Manager
+	What Request:
+		1. Register Sensor in Run Time Registry
+	Input Format:
+		Config File
+	Steps:
+		1. Get config file from Request Manager
+		2. Validate config file if not in correct format send error msg
+		3. Store the Sensor information in Run Time Registry
+		4. Send Sensor a topic to dump data
+		5. Store that topic in RunTime Registry
+
+<Sensor Manager>
+	Who will send Request:
+		1. Deployment Manager
+	What Request:
+		1. Get Sensor Topic to Bind with User Service
+	Input Format:
+		Sensor details given by User
+	Steps:
+		1. Sensor Manager will listen on a topic for request
+		2. Sensor will validate the request and will check if sensor is available in Registry or not
+		3. A temporary topic will be created and will be send to Deployment manager 
+		4. Sensor Manager will release a Thread to serve request
+		5. Thread will read data from sensor topic ---> Process the data as per user requirement --> dump the data in temporary topic created by sensor manager
+	Output:
+		1. Temporary Topic
+		2. Error that sensor not available
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
