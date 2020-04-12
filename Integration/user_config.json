@@ -1,0 +1,185 @@
+"Application":{
+  "username": "useruniqueid",
+  "application_id": "application_id",
+  
+  "service-1":{ 
+
+      "service_name": "service_name",
+      "filename":"hello.py",
+
+      "singleinstance":"True",
+      
+      "time": {
+        "start": [
+          "01:12",
+          "05:00"
+        ],
+        "end": [
+          "01:31",
+          "06:00"
+        ]
+      },
+      
+      "days":["Monday"],
+      
+      "period":"None",
+
+      "dependency":["service-1","service-2"],
+
+      "environment":{
+      	"python3":true,
+      	"tomcat":true,
+      	"java":true,
+      	"c++":false,
+      	"nginx":false,
+      	"python-kafka":true,
+      	"flask":true
+      },
+
+      "sensor":{
+          "sensor1":
+            {
+              "sensor_name": "Fan",
+              "sensor_address" :
+              {
+                    "area" : "A",
+                    "building" : "B",
+                    "room_no" : "C"
+              },
+
+              "processing":
+              {
+                "data_rate":5
+              }
+            },
+
+            "sensor2":
+              {
+              "sensor_name": "Lamp",
+              "sensor_address" :
+              {
+                    "area" : "A",
+                    "building" : "C",
+                    "room_no" : "D"
+              },
+
+              "processing":
+              {
+                "data_rate":1
+              }
+            }
+      }
+  }
+  ,
+  "service-2":{
+      
+      "service_name": "service_name",
+      
+      "singleinstance":"True",
+      
+      "time": {
+        "start": [
+          "01:12",
+          "05:00"
+        ],
+        "end": [
+          "01:31",
+          "06:00"
+        ]
+      },
+      
+      "days":["Monday"],
+      
+      "period":"None",
+
+      "sensor":{
+          "sensor1":
+            {
+              "sensor_name": "Fan",
+              "sensor_address" :
+              {
+                    "area" : "A",
+                    "building" : "B",
+                    "room_no" : "C"
+              },
+
+              "processing":
+              {
+                "data_rate":5
+              }
+            },
+
+            "sensor2":
+              {
+              "sensor_name": "Lamp",
+              "sensor_address" :
+              {
+                    "area" : "A",
+                    "building" : "C",
+                    "room_no" : "D"
+              },
+
+              "processing":
+              {
+                "data_rate":1
+              }
+            }
+      }
+  }
+  ,"service-3":{
+      
+      "service_name": "service_name",
+      
+      "singleinstance":"True",
+      
+      "time": {
+        "start": [
+          "01:12",
+          "05:00"
+        ],
+        "end": [
+          "01:31",
+          "06:00"
+        ]
+      },
+      
+      "days":["Monday"],
+      
+      "period":"None",
+
+      "sensor":{
+          "sensor1":
+            {
+              "sensor_name": "Fan",
+              "sensor_address" :
+              {
+                    "area" : "A",
+                    "building" : "B",
+                    "room_no" : "C"
+              },
+
+              "processing":
+              {
+                "data_rate":5
+              }
+            },
+
+            "sensor2":
+              {
+              "sensor_name": "Lamp",
+              "sensor_address" :
+              {
+                    "area" : "A",
+                    "building" : "C",
+                    "room_no" : "D"
+              },
+
+              "processing":
+              {
+                "data_rate":1
+              }
+            }
+      }
+  }
+}
+
