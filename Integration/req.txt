@@ -6,12 +6,15 @@
 
 # Request manager ---> Scheduler
 	/scheduler_url/
+
 	{"services":["service-1","service-2"] , "config_file":_}
 	ack: {"valid":true}
 	unique_id:______
 
 # Scheduler ---> Service life cycle
+	
 	send = unique_id="applicationname_servicename"
+	
 	{"username":,"application_name":,"service_name":,"unique_id":,"dependency":[service_name] ,"action":"start/stop","filename":"", "config_file":_}
 
 # Service ---> Server
@@ -23,4 +26,9 @@
 	{"username":,"application_name":,"service_name":,"unique_id":,"filename":"","dependency":[service_name], "config_file":_}
 
 # Deployer ---> Sensor Manager
-	
+	i/p -> {"username":,"application_name":,"service_name":,"unique_id":,"config_file":_}
+
+	o/p -> {"temporary_topic":"","sensor_host":["sensor1_in","sensor2_in"]}
+
+# Deployer to Action Manager:
+	i/p --> {"username":,"application_name":,"service_name":,"unique_id":,"config_file":_}

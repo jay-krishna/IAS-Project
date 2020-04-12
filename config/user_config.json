@@ -1,15 +1,14 @@
+
 "application_name":{
   
   "service-1":{
       
-      "username": "useruniqueid",
-      
-      "application_id": "application_id",
-      
-      "service_name": "service_name",
+      "username": "useruniqueid", //login id
       
       "singleinstance":"True",
       
+      "code_path":"",
+
       "time": {
         "start": [
           "01:12",
@@ -185,4 +184,3 @@
       }
   }
 }
-
