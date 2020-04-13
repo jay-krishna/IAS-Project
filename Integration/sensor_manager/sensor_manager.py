@@ -9,7 +9,7 @@ import hashlib
 
 registry_ip = 'localhost'
 registry_port = 27017
-sensor_client = 'final3'
+sensor_client = 'final8'
 sensor_document = 'sensor'
 kafka_platform_ip = 'localhost:9092'
 
@@ -59,7 +59,6 @@ def authorization(query,user_id):
 		result.append(list(docs))
 
 	if(len(result) == 0):
-		print(len(result))
 		return 'NM'
 
 	return 'True'
@@ -87,17 +86,11 @@ def resolver(query):
 def fun():
 
 	#get userid , config file as a request
-	data = request.args.get('data')
-	data = data.split()
-	user_id = data[0]
-	service_id = data[1]
-	config_path = data[2]
+	data = request.get_json()
+	user_id = data['username']
+	service_id = data['service_name']
+	d = data['config_file']
 	
-	#dump file into json
-	d=None
-	with open(config_path) as f:
-		d = json.load(f)
-
 	#store each query in a list	
 	query=[]
 	data_rate = []
@@ -119,15 +112,16 @@ def fun():
 
 	#get sensor topic and host topic
 	sensor_topic,host_topic = resolver(query)
-	
+	print(sensor_topic)
+
 	# create temp topic
-	# # Open thread for execution
-	t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,service_id,data_rate,) )
-	t.start()
+	# Open thread for execution
+	# t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,service_id,data_rate,) )
+	# t.start()
 
 	# send temp topic to deployer
 	temp = {'topic': service_id}
 	return temp
 
 if __name__ == '__main__':
-   app.run(port=5040)
+   app.run(debug=True,port=5040)

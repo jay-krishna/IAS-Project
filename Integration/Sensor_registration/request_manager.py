@@ -1,20 +1,17 @@
+from flask import Flask,request,jsonify
 import requests
 import json
 
 def main():
-	user_id = input('Enter User ID : ')
-	data=None
-	with open('./config.json') as f:
-		data = json.load(f)
-	# Make Request To Sensor Registration To Register the sensor 
-	URL = "http://127.0.0.1:5060/"
-	para = {'user_id' : user_id , 'config_file'=data}
 
+	file=open("config.json","r")
+	data=json.load(file)
 
-	response = requests.post(url=URL, params = para).text
-	# resp = response.json()
-	# print(resp['msg'])
+	d = {'username':'pratik','config_file':data}
+
+	r=requests.post(url="http://127.0.0.1:5060/",json=d)
 	
+	print(r.json())
 	
 if __name__ == '__main__':
 	main()
