@@ -1,9 +1,9 @@
 {
-	"sensor1":{
+    "sensor1":{
         "sensor_name":"Fan",
         "sensor_geolocation":{
-            "lat" : "None",
-            "long" : "None"
+            "lat" : "10",
+            "long" : "32"
         },
         "sensor_address":{
             "area":"A",
@@ -11,14 +11,14 @@
             "room_no":"C"
         },
         "processing":{
-            "data_rate":"None"
+            "data_rate":5
         }
     },
     "sensor2":{
         "sensor_name":"Lamp",
         "sensor_geolocation":{
-            "lat" : "None",
-            "long" : "None"
+            "lat" : "10",
+            "long" : "32"
         },
         "sensor_address":{
             "area":"A",
@@ -26,7 +26,7 @@
             "room_no":"D"
         },
         "processing":{
-            "data_rate":"None"
+            "data_rate":1
         }
     }
 }
