@@ -1,8 +1,8 @@
 "Application":{
   "username": "useruniqueid",
   "application_id": "application_id",
-  
-  "service-1":{ 
+  "services":{
+      "service-1":{ 
 
       "service_name": "service_name",
       "filename":"hello.py",
@@ -27,13 +27,13 @@
       "dependency":["service-1","service-2"],
 
       "environment":{
-      	"python3":true,
-      	"tomcat":true,
-      	"java":true,
-      	"c++":false,
-      	"nginx":false,
-      	"python-kafka":true,
-      	"flask":true
+        "python3":true,
+        "tomcat":true,
+        "java":true,
+        "c++":false,
+        "nginx":false,
+        "python-kafka":true,
+        "flask":true
       },
 
       "sensor":{
@@ -181,5 +181,7 @@
             }
       }
   }
+  }
+
 }
 

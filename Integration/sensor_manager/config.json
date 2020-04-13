@@ -1,0 +1,33 @@
+{
+	"sensor1":
+	{
+		"sensor_name": "Fan",
+		"sensor_address" :
+		{
+					"area" : "A",
+					"building" : "B",
+					"room_no" : "C"
+		},
+
+		"processing":
+		{
+			"data_rate":5
+		}
+	},
+
+	"sensor2":
+		{
+		"sensor_name": "Lamp",
+		"sensor_address" :
+		{
+					"area" : "A",
+					"building" : "C",
+					"room_no" : "D"
+		},
+
+		"processing":
+		{
+			"data_rate":1
+		}
+	}
+}
