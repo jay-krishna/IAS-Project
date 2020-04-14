@@ -1,0 +1,111 @@
+
+Request from Request Manager to SensorRegistration
+   APIs:/sensorregistration
+   
+   New request format:-
+   {
+      "username": "",
+      "config_file": "serviceName"
+   }
+
+   Response format:{ 'ack':'Sensor Registered'
+   
+   }
+
+
+Request from Scheduler to ServiceLCM
+   APIs:
+   http://127.0.0.1:8080/servicelcm/service/start
+   http://127.0.0.1:8080/servicelcm/service/stop
+
+   New request format:-
+   {
+      "serviceId": "s2",
+      "serviceName": "serviceName",
+      "applicationName":"App1,    
+      "userId": "U1"
+   }
+
+   Response format:-
+   200 / OK
+
+
+Request from ServiceLCM to ServerLCM:-
+   API: http://serverip:serverport/allocate_server/serviceid
+   Request Format: No request body needed
+
+
+Response from ServerLCM to ServiceLCM (returns free server)
+   API http://127.0.0.1:8080/servicelcm/service/update
+   Request Format:
+   {
+      "result":"OK"/"NO MACHINE"
+      "serviceId": "s2",
+      "serverIp": "127.0.0.1",
+      "sshPort": "22",
+      "username": “Danish”,
+      "password":”password”
+   }
+
+
+
+Request from ServiceLCM to DeploymentManager (to deploy a service)
+   API: /deployment/dodeploy
+   Request format : 
+   {
+   "Username":,
+   "Application_name":,
+   "Service_name":,
+   "Service_id":,
+   “serverIp”:
+   “sshPort”
+   }
+
+
+Response from DeploymentManager to ServiceLCM
+   API: http://127.0.0.1:8080/servicelcm/service/deploymentStatus
+   Request format:-
+
+   {
+   	"serviceId":"s2",
+   	"userId":"u1",
+   	"status":"success",
+   	"ip":"127.0.0.1",
+   	"port":"6666",
+   	"containerId":"cju38jwc09q3da"
+   }
+
+
+Request from Deployment Manager to Sensor Manager:
+   API: /sensormanager/
+   Request format:{
+      "username":"s2",
+      "applicationname":"",
+      "servicename":"",
+      "unique_id":,
+      "config_file":
+   }
+
+
+Response from Sensor Manager to Deployment Manager:
+   Response format:-
+   {
+      "temporary_topic":"s2",
+      "sensor_host":["","",""]
+   }
+
+
+Request from Deployer to Action Manager:
+   APIs: /actionmanager
+
+   Request format:-
+   {
+      "username": "",
+      "applicationname": "",
+      "service_name":"",    
+      "unique_id": "",
+      "config_file":"",
+      "sensor_host":""
+   }
+
+
