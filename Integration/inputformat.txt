@@ -23,7 +23,7 @@ Request from Scheduler to ServiceLCM
       "serviceId": "s2",
       "serviceName": "serviceName",
       "applicationName":"App1,    
-      "userId": "U1"
+      "username": "U1"
    }
 
    Response format:-
@@ -40,10 +40,10 @@ Response from ServerLCM to ServiceLCM (returns free server)
    Request Format:
    {
       "result":"OK"/"NO MACHINE"
-      "serviceId": "s2",
-      "serverIp": "127.0.0.1",
+      "serviceid": "s2",
+      "serverip": "127.0.0.1",
       "sshPort": "22",
-      "username": “Danish”,
+      "machineusername": “Danish”,
       "password":”password”
    }
 
@@ -53,12 +53,14 @@ Request from ServiceLCM to DeploymentManager (to deploy a service)
    API: /deployment/dodeploy
    Request format : 
    {
-   "Username":,
-   "Application_name":,
-   "Service_name":,
-   "Service_id":,
-   “serverIp”:
-   “sshPort”
+   "username":,
+   "applicationname":,
+   "servicename":,
+   "serviceid":,
+   "serverip":
+   “sshPort”:,
+   "machineusername": ,
+   "password":”password”
    }
 
 
@@ -67,11 +69,11 @@ Response from DeploymentManager to ServiceLCM
    Request format:-
 
    {
-   	"serviceId":"s2",
-   	"userId":"u1",
+   	"serviceid":"s2",
+   	"username":"u1",
    	"status":"success",
-   	"ip":"127.0.0.1",
-   	"port":"6666",
+   	"serviceip":"127.0.0.1",
+   	"“sshPort”":"6666",
    	"containerId":"cju38jwc09q3da"
    }
 
@@ -82,7 +84,7 @@ Request from Deployment Manager to Sensor Manager:
       "username":"s2",
       "applicationname":"",
       "servicename":"",
-      "unique_id":,
+      "serviceid":,
       "config_file":
    }
 
@@ -102,8 +104,8 @@ Request from Deployer to Action Manager:
    {
       "username": "",
       "applicationname": "",
-      "service_name":"",    
-      "unique_id": "",
+      "servicename":"",    
+      "serviceid": "",
       "config_file":"",
       "sensor_host":""
    }
