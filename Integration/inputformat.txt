@@ -9,20 +9,22 @@ Request from Request Manager to SensorRegistration
    }
 
    Response format:{ 'ack':'Sensor Registered'
-   
    }
 
+Request from Request Manager to Scheduler:
+	APIs:/scheduler
+   	#jay yahan likh de format
 
 Request from Scheduler to ServiceLCM
    APIs:
-   http://127.0.0.1:8080/servicelcm/service/start
-   http://127.0.0.1:8080/servicelcm/service/stop
+   /servicelcm/service/start
+   /servicelcm/service/stop
 
    New request format:-
    {
       "serviceId": "s2",
-      "serviceName": "serviceName",
-      "applicationName":"App1,    
+      "servicename": "serviceName",
+      "applicationname":"App1,    
       "username": "U1"
    }
 
@@ -74,7 +76,7 @@ Response from DeploymentManager to ServiceLCM
    	"status":"success",
    	"serviceip":"127.0.0.1",
    	"“sshPort”":"6666",
-   	"containerId":"cju38jwc09q3da"
+   	"containerid":"cju38jwc09q3da"
    }
 
 
