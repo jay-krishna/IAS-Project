@@ -1,4 +1,5 @@
-from flask import Flask ,jsonify,requests
+from flask import Flask,request,jsonify
+import requests
 import json
 from pymongo import MongoClient
 
@@ -8,13 +9,12 @@ app = Flask(__name__)
 
 registry_ip = 'localhost'
 registry_port = 27017
-collection_name = 'final3'
+collection_name = 'final8'
 
 def filter(d):
-
+	
 	for i in d:
 		for j in d[i]:
-			print(j)
 			if(j=='data_dump'):
 				if((d[i][j]['kafka']['broker_ip'] =="None" or d[i][j]['kafka']['topic'] =="None") and (d[i][j]['mongo_db']['ip'] =="None"  or d[i][j]['mongo_db']['passwd'] =="None" or d[i][j]['mongo_db']['document_name'] =="None")):
 					print("Data_dump information not given")
@@ -32,30 +32,34 @@ def filter(d):
 						del d[i][j]['socket']
 					elif(d[i][j]['kafka']['kafka_broker_ip'] == "None"):
 						del d[i][j]['kafka']
-		return d
+	return d
 
 
 
-@app.route('/' ,methods=['GET' ,'POST'])
+@app.route('/' ,methods=['POST'])
 def fun():
 	global registry_port
 	global registry_ip
 
-	data = requests.get('config_file')
-	print(type(data))
-	# for i in d:
-	# 	d[i]['user_id'] = user_id
-	# d = filter(d)
 
-	# #registry path
-	# client = MongoClient(registry_ip ,registry_port)
+	data=request.get_json()
+	d = data['config_file']
+	user_id  = data['username']
 
-	# mydb = client[collection_name]
-	# mycol = mydb["sensor"]
+	for i in d:
+		d[i]['user_id'] = user_id
+	
+	d = filter(d)
 
-	# for i in d:
-	# 	print(d[i])
-	# 	mycol.insert_one(d[i])
+	#registry path
+	client = MongoClient(registry_ip ,registry_port)
+
+	mydb = client[collection_name]
+	mycol = mydb["sensor"]
+
+	for i in d:
+		print(d[i])
+		mycol.insert_one(d[i])
 	
 	ack={'msg':'Sensor Registered'}
 	return ack,200

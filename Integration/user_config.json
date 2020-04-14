@@ -37,6 +37,10 @@
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"Fan",
+                        "sensor_geolocation":{
+                            "lat" : "10",
+                            "long" : "32"
+                        },
                         "sensor_address":{
                             "area":"A",
                             "building":"B",
@@ -48,6 +52,10 @@
                     },
                     "sensor2":{
                         "sensor_name":"Lamp",
+                        "sensor_geolocation":{
+                            "lat" : "10",
+                            "long" : "32"
+                        },
                         "sensor_address":{
                             "area":"A",
                             "building":"C",
