@@ -64,7 +64,7 @@
                 "filename":"hello2.py",
                 "singleinstance":"False",
                 "dependency":[
-                    "service-1"
+                    "service-4"
                 ],
                 "environment":{
                     "python3":true,
@@ -145,6 +145,63 @@
                     "Monday"
                 ],
                 "period":"None",
+                "sensor":{
+                    "sensor1":{
+                        "sensor_name":"Fan",
+                        "sensor_address":{
+                            "area":"A",
+                            "building":"B",
+                            "room_no":"C"
+                        },
+                        "processing":{
+                            "data_rate":5
+                        }
+                    },
+                    "sensor2":{
+                        "sensor_name":"Lamp",
+                        "sensor_address":{
+                            "area":"A",
+                            "building":"C",
+                            "room_no":"D"
+                        },
+                        "processing":{
+                            "data_rate":1
+                        }
+                    }
+                }
+            },
+        "service-4":{
+                "service_name":"service_name",
+                "filename":"hello4.py",
+                "singleinstance":"False",
+                "dependency":[
+                ],
+                "environment":{
+                    "python3":true,
+                    "tomcat":true,
+                    "java":true,
+                    "c++":false,
+                    "nginx":false,
+                    "python-kafka":true,
+                    "flask":true
+                },
+                "time":{
+                    "start":[
+                        "01:12",
+                        "05:00"
+                    ],
+                    "end":[
+                        "01:31",
+                        "06:00"
+                    ]
+                },
+                "days":[
+                    "Monday"
+                ],
+                "period":{
+                    "interval":50,
+                    "length":10
+                },
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"Fan",
