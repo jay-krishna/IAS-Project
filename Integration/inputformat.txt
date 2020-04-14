@@ -33,7 +33,7 @@ Request from Scheduler to ServiceLCM
 
 
 Request from ServiceLCM to ServerLCM:-
-   API: http://serverip:serverport/allocate_server/serviceid
+   API: http://serverip:serverport/serverlcm/allocate_server/serviceid
    Request Format: No request body needed
 
 
