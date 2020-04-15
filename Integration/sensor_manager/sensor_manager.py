@@ -70,16 +70,29 @@ def filter(d):
 			del d[i]['sensor_address']
 	return d
 
+def getsensor(d,servicename):
+	l = d['Application']['services'].keys()
+	for i in l:
+		if(d['Application']['services'][i]['servicename'] == servicename):
+			d = d['Application']['services'][i]['sensor']
+			break
+
+	return d
+
+
 @app.route('/sensormanager' ,methods=['GET' ,'POST'])
 def fun():
 
 	#get userid , config file as a request
 	data = request.get_json()
 	user_id = data['username']
-	service_id = data['servicename']
+	servicename = data['servicename']
 	d = data['config_file']
-	unique_id = data['serviceid']
+	serviceid = data['serviceid']
 	
+	#get sensor part from the config
+	d = getsensor(d,servicename)
+
 	d=filter(d)
 
 	#store each query in a list	
@@ -95,22 +108,18 @@ def fun():
 	sensor_topic,host_topic = resolver(query,user_id)
 	
 	if(len(sensor_topic) == 0):
-		# sensor_topic,host_topic = checknearest(query,user_id)
-		# if(len(sensor_topic) == 0):
 		temp = {'ack':'No Sensor Found or Not Authorized'}
 		return temp
-	
-	print(sensor_topic)
 
-	# create temp topic
+	# # create temp topic
 	temptopic = unique_id + str(random.randrange(0,20))
-	print(temptopic)
-	Open thread for execution
-	t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,service_id,temptopic,data_rate,) )
+	# print(temptopic)
+	# Open thread for execution
+	t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,serviceid,temptopic,data_rate,))
 	t.start()
 
 	# send temp topic to deployer
-	temp = {'ack': service_id}
+	temp = {'ack': serviceid}
 	return temp
 
 if __name__ == '__main__':

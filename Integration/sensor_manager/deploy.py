@@ -13,11 +13,11 @@ def get_sensor_data(topic):
 def main(): 
 
 	# Make Request To Sensor Manager To Get Sensor Topics  
-	file=open("config.json","r")
+	file=open("user_config.json","r")
 	data=json.load(file)
 
-	d = {"username":"pratik","application_name":"application1","service_name":"service-1","unique_id":"pratik_application1_service-1","config_file":data}
-	r=requests.post(url="http://127.0.0.1:5040/",json=d)
+	d = {"username":"pratik","applicationname":"application1","servicename":"fridge","serviceid":"pratik_application1_service-1","config_file":data}
+	r=requests.post(url="http://127.0.0.1:5040/sensormanager",json=d)
 
 	# topic = r.json()
 	# print(topic)

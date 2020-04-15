@@ -1,0 +1,9 @@
+
+{
+"service":{
+	"send_data_to_sensor": "True",
+
+	"Output_display_to_user": "None"
+}
+
+}

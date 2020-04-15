@@ -13,7 +13,10 @@ registry_port = 27017
 collection_name = 'final8'
 
 def filter(d):
-	
+	for i in d:
+		if(d[i]['sensor_geolocation']['lat'] == "None" or d[i]['sensor_geolocation']['long'] == "None"):
+			del d[i]['sensor_geolocation']
+
 	for i in d:
 		for j in d[i]:
 			if(j=='data_dump'):
@@ -50,6 +53,7 @@ def fun():
 	for i in d:
 		d[i]['user_id'] = user_id
 	
+	#filter data, if subsection value is none entry will be deleted
 	d = filter(d)
 
 	# registry path
@@ -63,7 +67,7 @@ def fun():
 		mycol.insert_one(d[i])
 	
 	ack={'msg':'Sensor Registered'}
-	return ack,200
+	return ack
 
 if __name__ == '__main__':
    app.run(debug=True,port=sys.argv[1])

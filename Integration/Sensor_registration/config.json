@@ -6,14 +6,14 @@
 
 		"sensor_geolocation" :
 				{
-					"lat" : "10",
+					"lat" : "None",
 					"long" : "32"
 				},
 		"sensor_address" :
 				{
 					"area" : "A",
 					"building" : "B",
-					"room_no" : "C"
+					"room_no" : "None"
 				},
 
 		"data_dump":
