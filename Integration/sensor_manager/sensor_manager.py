@@ -1,4 +1,5 @@
 from flask import Flask ,jsonify,request
+import sys
 import json
 from pymongo import MongoClient
 import threading
@@ -69,27 +70,15 @@ def filter(d):
 			del d[i]['sensor_address']
 	return d
 
-
-# def checknearest(query,username):
-	
-# 	for i in range(len(query)):
-# 		l = query[i].keys()
-# 		if('sensor_geolocation' in l):
-# 			lat = []
-
-# 	return [1,2]
-
-
-
-@app.route('/' ,methods=['GET' ,'POST'])
+@app.route('/sensormanager' ,methods=['GET' ,'POST'])
 def fun():
 
 	#get userid , config file as a request
 	data = request.get_json()
 	user_id = data['username']
-	service_id = data['service_name']
+	service_id = data['servicename']
 	d = data['config_file']
-	unique_id = data['unique_id']
+	unique_id = data['serviceid']
 	
 	d=filter(d)
 
@@ -125,4 +114,4 @@ def fun():
 	return temp
 
 if __name__ == '__main__':
-   app.run(debug=True,port=5040)
+   app.run(debug=True,port=sys.argv[1])

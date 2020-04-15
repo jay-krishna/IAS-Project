@@ -9,9 +9,9 @@ def main():
 
 	d = {'username':'pratik','config_file':data}
 
-	r=requests.post(url="http://127.0.0.1:5060/",json=d)
+	r=requests.post(url="http://127.0.0.1:5050/sensorregistration",json=d)
 	
-	print(r.json())
+	# print(r.json())
 	
 if __name__ == '__main__':
 	main()

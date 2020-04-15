@@ -1,5 +1,6 @@
 from flask import Flask,request,jsonify
 import requests
+import sys 
 import json
 from pymongo import MongoClient
 
@@ -36,7 +37,7 @@ def filter(d):
 
 
 
-@app.route('/' ,methods=['POST'])
+@app.route('/sensorregistration' ,methods=['GET','POST'])
 def fun():
 	global registry_port
 	global registry_ip
@@ -51,7 +52,7 @@ def fun():
 	
 	d = filter(d)
 
-	#registry path
+	# registry path
 	client = MongoClient(registry_ip ,registry_port)
 
 	mydb = client[collection_name]
@@ -65,4 +66,4 @@ def fun():
 	return ack,200
 
 if __name__ == '__main__':
-   app.run(debug=True,port=5060)
+   app.run(debug=True,port=sys.argv[1])
