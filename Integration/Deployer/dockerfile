@@ -1,0 +1,7 @@
+from base_image
+
+RUN pip3 install kafka-python ; exit 0
+
+ADD service1.py .
+
+ENTRYPOINT python3 -u service1.py topic1 dhamo_Application-1_service1 service-2 service-3 
