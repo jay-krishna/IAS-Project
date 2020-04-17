@@ -67,7 +67,7 @@ def fun():
 			t.start()
 
 	# send temp topic to deployer
-	temp = {'ack': 'OK'}
+	temp = {'status': '200'}
 	return temp
 
 if __name__ == '__main__':

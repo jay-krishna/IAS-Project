@@ -11,6 +11,18 @@ Request from Request Manager to SensorRegistration
    Response format:{ 'ack':'Sensor Registered'
    }
 
+Request from Request Manager to getsensordata
+   APIs:/getsensordata
+   
+   New request format:-
+   {
+      "username": "",
+      "config_file": "",
+   }
+
+   Response format: sensor data
+   
+
 Request from Request Manager to Scheduler:
 	APIs:/scheduler
    	#jay yahan likh de format
@@ -83,7 +95,7 @@ Response from DeploymentManager to ServiceLCM
 Request from Deployment Manager to Sensor Manager:
    API: /sensormanager/
    Request format:{
-      "username":"s2",
+      "username":"",
       "applicationname":"",
       "servicename":"",
       "serviceid":,
@@ -94,7 +106,7 @@ Request from Deployment Manager to Sensor Manager:
 Response from Sensor Manager to Deployment Manager:
    Response format:-
    {
-      "temporary_topic":"s2",
+      "temporary_topic":"",
       "sensor_host":["","",""]
    }
 

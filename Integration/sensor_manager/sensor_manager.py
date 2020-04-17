@@ -86,8 +86,12 @@ def fun():
 	#get userid , config file as a request
 	data = request.get_json()
 	user_id = data['username']
+	print(user_id)
+
 	servicename = data['servicename']
+	print(servicename)
 	d = data['config_file']
+	print(d)
 	serviceid = data['serviceid']
 	
 	#get sensor part from the config
@@ -112,15 +116,19 @@ def fun():
 		return temp
 
 	# # create temp topic
-	temptopic = unique_id + str(random.randrange(0,20))
-	# print(temptopic)
+	temptopic = serviceid + str(random.randrange(0,20))
+	print(temptopic)
 	# Open thread for execution
-	t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,serviceid,temptopic,data_rate,))
-	t.start()
+	# t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,serviceid,temptopic,data_rate,))
+	# t.start()
 
 	# send temp topic to deployer
-	temp = {'ack': serviceid}
-	return temp
+	print("My temptopic ",temptopic)
+	res = {
+		'temporary_topic' : temptopic,
+		'sensor_host' : host_topic
+	}
+	return jsonify(res)
 
 if __name__ == '__main__':
    app.run(debug=True,port=sys.argv[1])

@@ -12,7 +12,7 @@ def sendRequest():
 	machine_password = 'root'
 	ip = '127.0.0.1'
 	port = 8000
-	uname = 'dhamo'
+	uname = 'pratik'
 	application_name = 'Application-1'
 	service_name = 'service1'
 	service_id = uname+"_"+application_name+"_"+service_name

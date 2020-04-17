@@ -13,7 +13,7 @@ def generateDokerFile(user_config, service_name, sensor_topic,output_topic):
 	environment = []
 	fg = True
 	for key, val in services.items():  #[service_name]['environment'].items():
-		if val['service_name'] == service_name:
+		if val['servicename'] == service_name:
 			filename = val['filename']
 			environment.append(val['environment'])
 			pip = val['python3-packages']
@@ -78,7 +78,7 @@ def getFileName(config_path, service_name):
 
 	services = config_file['Application']['services']
 	for key,value in services.items():
-		if value['service_name'] == service_name:
+		if value['servicename'] == service_name:
 			filename = value['filename']
 			return filename
 
@@ -90,7 +90,7 @@ def getSensorTopic(username,application_name,service_name,serviceid,config_path)
 	configfile = open(config_path, 'r')
 	config = json.load(configfile)
 	configfile.close()
-	URL = "http://localhost:6000/sensormanager/"
+	URL = "http://127.0.0.1:6000/sensormanager"
 	req = {
 		'username' : username,
 		'applicationname' : application_name,
@@ -102,7 +102,7 @@ def getSensorTopic(username,application_name,service_name,serviceid,config_path)
 	return res.json()
 
 def notifyActionManager(username,application_name,servicename,serviceid,config_path,sensor_host):
-	URL = "http://localhost:7000/actionmanager"
+	URL = "http://127.0.0.1:7000/actionmanager"
 	configfile = open(config_path, 'r')
 	config = json.load(configfile)
 	configfile.close()
