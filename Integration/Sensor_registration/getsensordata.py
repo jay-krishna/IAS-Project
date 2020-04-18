@@ -30,6 +30,9 @@ def fun():
 	
 	for i in d:
 		del i['_id']
+		del i['data_dump']
+		del i['sensor_data_type']
+		del i['sensor_host']
 	
 	return jsonify(d)
 

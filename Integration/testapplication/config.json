@@ -5,9 +5,9 @@
         "services":
         {
             "service-1":{
-                "servicename":"algo1",
+                "servicename":"automatedacservice",
                 "scheduled":"True",
-                "filename":"algo1.py",
+                "filename":"automatedacservice.py",
                 "singleinstance":"True",
                 "time":{
                     "start":[
@@ -35,7 +35,7 @@
                 },
                 "sensor":{
                     "sensor1":{
-                        "sensor_name":"Camera",
+                        "sensor_name":"temperature",
                         "sensor_geolocation":{
                             "lat" : "None",
                             "long" : "None"
@@ -46,11 +46,11 @@
                             "room_no":"100"
                         },
                         "processing":{
-                            "data_rate":0
+                            "data_rate":30
                         }
                     },
                     "sensor2":{
-                        "sensor_name":"Camera",
+                        "sensor_name":"temperature",
                         "sensor_geolocation":{
                             "lat" : "None",
                             "long" : "None"
@@ -61,33 +61,52 @@
                             "room_no":"101"
                         },
                         "processing":{
-                            "data_rate":0
+                            "data_rate":30
                         }
+                    }
+                },
+                "action":{
+                    "send_output_to_sensor":{
+                            "value":false,
+                            "sensor":{
+                            }
                     },
-                    "sensor3":{
-                        "sensor_name":"Camera",
-                        "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
-                        },
-                        "sensor_address":{
-                            "area":"iiith",
-                            "building":"nilgiri",
-                            "room_no":"102"
-                        },
-                        "processing":{
-                            "data_rate":0
+                    "Output_display_to_user": true,
+
+                    "SEnd_SMS":{
+                        "message":"None",
+                        "number":"None"
+                    },
+                    "Send_Email":
+                    {
+                        "To":"None",
+                        "From":"None",
+                        "Subject":"None"
                         }
                     }
                 }
-            }
-            ,
+            },
+
             "service-2":{
-                "servicename":"algo2",
+                "servicename":"emergencyfirealaram",
                 "scheduled":"True",
-                "filename":"algo2.py",
-                "singleinstance":"False",
-                "dependency":["service-1"],
+                "filename":"emergencyfirealaram.py",
+                "singleinstance":"True",
+                "time":{
+                    "start":[
+                        "01:12",
+                        "05:00"
+                    ],
+                    "end":[
+                        "01:31",
+                        "06:00"
+                    ]
+                },
+                "days":[
+                    "Monday"
+                ],
+                "period":"None",
+                "dependency":[],
                 "environment":{
                     "python3":true,
                     "tomcat":true,
@@ -97,16 +116,109 @@
                     "python-kafka":true,
                     "flask":true
                 },
-                "time":{
-                
-                },
-                "days":[
-                
-                ],
-                "period":"None",
                 "sensor":{
                     "sensor1":{
-                        "sensor_name":"AC",
+                        "sensor_name":"temperature",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"100"
+                        },
+                        "processing":{
+                            "data_rate":30
+                        }
+                    },
+                    "sensor2":{
+                        "sensor_name":"temperature",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"101"
+                        },
+                        "processing":{
+                            "data_rate":30
+                        }
+                    }
+                },
+                "action":{
+                    "send_output_to_sensor":{
+                            "value":true,
+                            "sensor":{
+                                "sensor_name":"alarm",
+                                "sensor_geolocation":{
+                                    "lat" : "None",
+                                    "long" : "None"
+                                },
+                                "sensor_address":{
+                                    "area" : "iiith",
+                                    "building" : "nilgiri",
+                                    "room_no" : "1"
+                                },
+                                "processing":{
+                                    "data_rate":30
+                                }
+                            }
+                        },
+                    "Output_display_to_user": "None",
+
+                    "Send_SMS":{
+                        "message":"None",
+                        "number":"None"
+                    },
+                    "Send_Email":
+                    {
+                        "To":"None",
+                        "From":"None",
+                        "Subject":"None"
+                        }
+                    }
+                }
+            },
+
+            "service-3":{
+                "servicename":"illegalaccessdetection",
+                "scheduled":"True",
+                "filename":"illegalaccessdetection.py",
+                "singleinstance":"True",
+                "time":{
+                    "start":[
+                        "01:12",
+                        "05:00"
+                    ],
+                    "end":[
+                        "01:31",
+                        "06:00"
+                    ]
+                },
+                "days":[
+                    "Monday"
+                ],
+                "period":"None",
+                "dependency":[],
+                "environment":{
+                    "python3":true,
+                    "tomcat":true,
+                    "java":true,
+                    "c++":false,
+                    "nginx":false,
+                    "python-kafka":true,
+                    "flask":true
+                },
+                "sensor":{
+                    "sensor1":{
+                        "sensor_name":"doorstep",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
                         "sensor_address":{
                             "area":"iiith",
                             "building":"nilgiri",
@@ -117,7 +229,11 @@
                         }
                     },
                     "sensor2":{
-                        "sensor_name":"AC",
+                        "sensor_name":"doorstep",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
                         "sensor_address":{
                             "area":"iiith",
                             "building":"nilgiri",
@@ -126,20 +242,107 @@
                         "processing":{
                             "data_rate":0
                         }
+                    }
+                },
+                "action":{
+                    "send_output_to_sensor":{
+                            "value":false,
+                        },
+                    "Output_display_to_user": "None",
+
+                    "Send_SMS":{
+                        "message":"None",
+                        "number":"None"
                     },
-                    "sensor3":{
-                        "sensor_name":"AC",
+                    "Send_Email":
+                    {
+                        "To":"pratiktiwari993@gmail.com",
+                        "From":"test@gmail.com",
+                        "Subject":"Illegal Access Notification"
+                        }
+                    }
+                }
+            },
+
+            "service-4":{
+                "servicename":"classroomschedulingservice",
+                "scheduled":"True",
+                "filename":"classroomschedulingservice.py",
+                "singleinstance":"True",
+                "time":{
+                    "start":[
+                        "01:12",
+                        "05:00"
+                    ],
+                    "end":[
+                        "01:31",
+                        "06:00"
+                    ]
+                },
+                "days":[
+                    "Monday"
+                ],
+                "period":"None",
+                "dependency":[],
+                "environment":{
+                    "python3":true,
+                    "tomcat":true,
+                    "java":true,
+                    "c++":false,
+                    "nginx":false,
+                    "python-kafka":true,
+                    "flask":true
+                },
+                "sensor":{
+                    "sensor1":{
+                        "sensor_name":"attendance",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
                         "sensor_address":{
                             "area":"iiith",
                             "building":"nilgiri",
-                            "room_no":"102"
+                            "room_no":"100"
+                        },
+                        "processing":{
+                            "data_rate":0
+                        }
+                    },
+                    "sensor2":{
+                        "sensor_name":"attendance",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"101"
                         },
                         "processing":{
                             "data_rate":0
                         }
                     }
+                },
+                "action":{
+                    "send_output_to_sensor":{
+                            "value":false,
+                        },
+                    "Output_display_to_user": "None",
+
+                    "Send_SMS":{
+                        "number":"9773930038"
+                    },
+                    "Send_Email":
+                    {
+                        "To":"None",
+                        "From":"None",
+                        "Subject":"None"
+                        }
+                    }
                 }
             }
-        }
+            
     }
-} 
+}

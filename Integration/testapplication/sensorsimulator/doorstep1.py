@@ -5,21 +5,22 @@ import time
 import random
 import threading 
 
+
 def sensor():
 	producer = KafkaProducer(bootstrap_servers=['127.0.0.1:9092'])
-	n = random.randrange(10,100)
+	l = [0,0,0,0,0,1,0,0,0,0]
 	while True:
-		print("Number of people in room 102 ",n)
-		producer.send(str('camera3_out'), bytes(str(i),"utf-8"))
+		n = random.choice(l)
+		producer.send(str('doorstep1_out'), bytes(str(n),"utf-8"))
 		producer.flush() 
-		time.sleep(5)
+		time.sleep(2)
 
 def main():
 	t1 = threading.Thread(target=sensor, args=())
 	t1.start()
-	consumer = KafkaConsumer('camera3_in',group_id='camera3',bootstrap_servers=['127.0.0.1:9092'])
+	consumer = KafkaConsumer('doorstep1_in',group_id='doorstep1',bootstrap_servers=['127.0.0.1:9092'])
 	for message in consumer:
-		print("Message recv from instance ",message.value.decode('utf-8'))
+		msg = message.value.decode('utf-8')
+		print("Message recv ",msg)
 
 main()
-

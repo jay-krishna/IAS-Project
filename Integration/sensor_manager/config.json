@@ -79,20 +79,9 @@
                             "data_rate":0
                         }
                     }
-                },
-                "action":{
-                    "send_data_to_sensor": "True",
-
-                    "Output_display_to_user": "None",
-
-                    "Send_Email":
-                    {
-                        "To":"None",
-                        "From":"None",
-                        "Subject":"None"
-                        }
-                    }
-            },
+                }
+            }
+            ,
             "service-2":{
                 "servicename":"algo2",
                 "scheduled":"True",

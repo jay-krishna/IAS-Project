@@ -3,33 +3,30 @@ import json
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
 
-def startalgo(topic):
-	producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
-	i= 0
-	while True:
-		producer.send(str('topic'), bytes('data' + str(i),"utf-8"))
-		i=i+1
-		producer.flush() 
-		time.sleep(2)
 
 def main():
-	user_id = input('Enter User ID : ')
-	service_id = input('Service ID ')
-	query = str(input('Path to config :'))
+	file=open("config.json","r")
+	data=json.load(file)
 
-	sensor_host = ['localhost:9092 sensor1_in','localhost:9092 sensor2_in']
+	URL = "http://127.0.0.1:5080/actionmanager"
 
-	sensor_host = json.dumps(sensor_host)
-	# print(sensor_host)
-	# Make Request To Sensor Manager To Get Sensor Topics  
-	URL = "http://127.0.0.1:5080/"
-	para = {'data' : user_id + ' ' + service_id + ' ' +  query , 'sensor_host':sensor_host}
+	req = {
+	'username' : 'pratik',
+	'applicationname' : 'testapplication1',
+	'servicename' : 'algo1',
+	'serviceid' : 'pratik_testapplication1_algo1',
+	'config_file' : data,
+	'sensor_host' : ['127.0.0.1:9092 camera1_in', '127.0.0.1:9092 camera2_in', '127.0.0.1:9092 camera3_in']
+	}
 
-	response = requests.post(url=URL, params = para )
+	res = requests.post(url = URL, json = req)
 
-	ack = response.json()['ack']
-	print(ack)
-	# startalgo(service_id+'_out')
+	print(res)
+	res = {
+	"status" : 200
+	}
+
+	return res
 
 if __name__ == '__main__':
 	main()
