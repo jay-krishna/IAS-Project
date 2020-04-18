@@ -11,7 +11,7 @@ def sensor_1():
 	while True:
 		n = random.randrange(0,250)
 		n1 = random.randrange(100,500)
-		msg = str(n) + " " + str(n1)
+		msg = "nilgiri roomno:101 " + str(n) + " " + str(n1)
 		producer.send(str('attendance1_out'), bytes(msg,"utf-8"))
 		producer.flush() 
 		time.sleep(30)

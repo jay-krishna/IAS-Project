@@ -10,8 +10,10 @@ def sensor():
 	producer = KafkaProducer(bootstrap_servers=['127.0.0.1:9092'])
 	l = [0,0,0,0,0,1,0,0,0,0]
 	while True:
+
 		n = random.choice(l)
-		producer.send(str('doorstep2_out'), bytes(str(n),"utf-8"))
+		msg = 'nilgiri roomno: 101' + " " + str(n)
+		producer.send(str('doorstep2_out'), bytes(str(msg),"utf-8"))
 		producer.flush() 
 		time.sleep(2)
 
