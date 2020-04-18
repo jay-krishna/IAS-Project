@@ -17,6 +17,9 @@ kafka_platform_ip = 'localhost:9092'
 
 app = Flask(__name__)
 
+
+storethreadobj = {}
+
 def dump_data(ip,topic ,service_id ,sensor_id ,temptopic,rate): 
 
 	producer = KafkaProducer(bootstrap_servers=[kafka_platform_ip])
@@ -114,9 +117,35 @@ def getsensor(d,servicename):
 
 	return d
 
+def writelogs(sensor_topic,host_topic,serviceid,temptopic,data_rate):
+	f = open('logs.txt','a')
+	for i in range(len(sensor_topic)):
+		f.write(str(sensor_topic[i]))
+		if(i != len(sensor_topic)-1):
+			f.write('#')
+	f.write('%')
+
+	for i in range(len(host_topic)):
+		f.write(str(host_topic[i]))
+		if(i != len(host_topic)-1):
+			f.write('#')
+	f.write('%')
+
+	f.write(str(serviceid))
+	f.write('%')
+	f.write(temptopic)
+	f.write('%')
+	for i in range(len(data_rate)):
+		f.write(str(data_rate[i]))
+		if(i != len(data_rate)-1):
+			f.write('#')
+	f.write('%')
+	f.write('\n')
+	f.close()
 
 @app.route('/sensormanager' ,methods=['GET' ,'POST'])
 def fun():
+
 
 	#get userid , config file as a request
 	data = request.get_json()
@@ -146,8 +175,9 @@ def fun():
 	print(temptopic)
 	
 	# Open thread for execution
-	# t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,serviceid,temptopic,data_rate,))
-	# t.start()
+	t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,serviceid,temptopic,data_rate,))
+	t.start()
+	writelogs(sensor_topic,host_topic,serviceid,temptopic,data_rate)
 
 	# send temp topic to deployer
 	print("temptopic for request ",serviceid,temptopic)
@@ -158,4 +188,27 @@ def fun():
 	return jsonify(res)
 
 if __name__ == '__main__':
-   app.run(debug=True,port=sys.argv[1])
+	try:
+		with open("logs.txt","r") as f:
+			#stuff goes here
+			data1 = "None"
+			while(data1 != ''):
+				data1 = f.readline()
+				if(data1 != ''):
+					data = data1.split('%')
+					sensor_host= data[0].split('#')
+					host_topic = data[1].split('#')
+					serviceid = data[2]
+					temptopic = data[3]
+					data_rate=[]
+					data = data[4].split('#')
+					print(data)
+					for i in data:
+						data_rate.append(int(i))
+					t = threading.Thread( target = sensor_topic_binding_to_tempTopic , args=(sensor_topic,host_topic,serviceid,temptopic,data_rate,))
+					t.start()
+		f.close()
+	except IOError:
+		print("No File")
+	    #do what you want if there is an error with the file opening
+	app.run(debug=True,port=sys.argv[1])

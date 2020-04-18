@@ -91,8 +91,6 @@ def fun():
 	print(servicename)
 	d = getactionmodule(d,servicename)
 
-
-
 	for i in d:
 		if(i == 'send_output_to_sensor' and d[i]['value'] != "None"):
 			
@@ -135,4 +133,4 @@ def fun():
 	return temp
 
 if __name__ == '__main__':
-   app.run(debug=True,port=5080)
+   app.run(debug=True,port = sys.argv[1])

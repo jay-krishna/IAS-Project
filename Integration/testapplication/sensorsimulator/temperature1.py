@@ -10,7 +10,7 @@ def sensor():
 	producer = KafkaProducer(bootstrap_servers=['127.0.0.1:9092'])
 	while True:
 		n = random.randrange(10,500)
-		msg = 'nilgiri roomno:100' +  ' ' + str(n)
+		msg = 'nilgiri_roomno:100' +  ' ' + str(n)
 		producer.send(str('temperature1_out'), bytes(str(msg),"utf-8"))
 		producer.flush() 
 		time.sleep(2)

@@ -28,7 +28,7 @@ def main():
 	data=json.load(file)
 
 	d = {"username":"pratik","applicationname":"testapplication1","servicename":"automatedacservice","serviceid":"pratik_testapplication1_automatedacservice","config_file":data}
-	r=requests.post(url="http://127.0.0.1:5040/sensormanager",json=d)
+	r=requests.post(url="http://127.0.0.1:5050/sensormanager",json=d)
 
 	data = r.json()
 	print(data)

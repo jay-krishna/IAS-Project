@@ -11,7 +11,7 @@ def sensor():
 	l = [0,0,0,0,0,1,0,0,0,0]
 	while True:
 		n = random.choice(l)
-		msg = 'nilgiri roomno: 100' + " " + str(n)
+		msg = 'nilgiri_roomno:100' + " " + str(n)
 		producer.send(str('doorstep1_out'), bytes(str(msg),"utf-8"))
 		producer.flush() 
 		time.sleep(2)
