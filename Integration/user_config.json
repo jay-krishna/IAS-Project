@@ -30,9 +30,9 @@
                     "java":true,
                     "c++":false,
                     "nginx":false,
-                    "python-kafka":true,
                     "flask":true
                 },
+                "python3-packages":["numpy", "pandas", "kafka-python", "flask"],
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"temperature",
@@ -108,13 +108,13 @@
                 ],
                 "environment":{
                     "python3":true,
-                    "tomcat":true,
+                    "tomcat":false,
                     "java":true,
                     "c++":false,
                     "nginx":false,
-                    "python-kafka":true,
                     "flask":true
                 },
+                "python3-packages":["pymongo", "kafka-python", "flask"],
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"temperature",
@@ -201,14 +201,14 @@
 
                 ],
                 "environment":{
-                    "python3":true,
+                    "python3":false,
                     "tomcat":true,
                     "java":true,
-                    "c++":false,
+                    "c++":true,
                     "nginx":false,
-                    "python-kafka":true,
-                    "flask":true
+                    "flask":false
                 },
+                "python3-packages":[],
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"doorstep",
