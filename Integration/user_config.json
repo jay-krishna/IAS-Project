@@ -281,13 +281,13 @@
                 ],
                 "environment":{
                     "python3":true,
-                    "tomcat":true,
-                    "java":true,
+                    "tomcat":false,
+                    "java":false,
                     "c++":false,
                     "nginx":false,
-                    "python-kafka":true,
                     "flask":true
                 },
+                "python3-packages":["sklearn", "pandas", "numpy", "SciPy"],
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"attendance",
