@@ -2,8 +2,7 @@
     "Application":{
         "username":"ias",
         "applicationname":"testapplication1",
-        "services":
-        {
+        "services":{
             "service-1":{
                 "servicename":"automatedacservice",
                 "scheduled":"True",
@@ -23,22 +22,23 @@
                     "Monday"
                 ],
                 "period":"None",
-                "dependency":[],
+                "dependency":[
+                ],
                 "environment":{
                     "python3":true,
                     "tomcat":true,
                     "java":true,
                     "c++":false,
                     "nginx":false,
-                    "python-kafka":true,
                     "flask":true
                 },
+                "python3-packages":["numpy", "pandas", "kafka-python", "flask"],
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"temperature",
                         "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
+                            "lat":"None",
+                            "long":"None"
                         },
                         "sensor_address":{
                             "area":"iiith",
@@ -52,8 +52,8 @@
                     "sensor2":{
                         "sensor_name":"temperature",
                         "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
+                            "lat":"None",
+                            "long":"None"
                         },
                         "sensor_address":{
                             "area":"iiith",
@@ -67,26 +67,23 @@
                 },
                 "action":{
                     "send_output_to_sensor":{
-                            "value":false,
-                            "sensor":{
-                            }
-                    },
-                    "Output_display_to_user": true,
+                        "value":false,
+                        "sensor":{
 
+                        }
+                    },
+                    "Output_display_to_user":true,
                     "SEnd_SMS":{
                         "message":"None",
                         "number":"None"
                     },
-                    "Send_Email":
-                    {
+                    "Send_Email":{
                         "To":"None",
                         "From":"None",
                         "Subject":"None"
-                        }
                     }
                 }
             },
-
             "service-2":{
                 "servicename":"emergencyfirealaram",
                 "scheduled":"True",
@@ -106,22 +103,24 @@
                     "Monday"
                 ],
                 "period":"None",
-                "dependency":[],
+                "dependency":[
+
+                ],
                 "environment":{
                     "python3":true,
-                    "tomcat":true,
+                    "tomcat":false,
                     "java":true,
                     "c++":false,
                     "nginx":false,
-                    "python-kafka":true,
                     "flask":true
                 },
+                "python3-packages":["pymongo", "kafka-python", "flask"],
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"temperature",
                         "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
+                            "lat":"None",
+                            "long":"None"
                         },
                         "sensor_address":{
                             "area":"iiith",
@@ -135,8 +134,8 @@
                     "sensor2":{
                         "sensor_name":"temperature",
                         "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
+                            "lat":"None",
+                            "long":"None"
                         },
                         "sensor_address":{
                             "area":"iiith",
@@ -150,39 +149,35 @@
                 },
                 "action":{
                     "send_output_to_sensor":{
-                            "value":true,
-                            "sensor":{
-                                "sensor_name":"alarm",
-                                "sensor_geolocation":{
-                                    "lat" : "None",
-                                    "long" : "None"
-                                },
-                                "sensor_address":{
-                                    "area" : "iiith",
-                                    "building" : "nilgiri",
-                                    "room_no" : "1"
-                                },
-                                "processing":{
-                                    "data_rate":30
-                                }
+                        "value":true,
+                        "sensor":{
+                            "sensor_name":"alarm",
+                            "sensor_geolocation":{
+                                "lat":"None",
+                                "long":"None"
+                            },
+                            "sensor_address":{
+                                "area":"iiith",
+                                "building":"nilgiri",
+                                "room_no":"1"
+                            },
+                            "processing":{
+                                "data_rate":30
                             }
-                        },
-                    "Output_display_to_user": "None",
-
+                        }
+                    },
+                    "Output_display_to_user":"None",
                     "Send_SMS":{
                         "message":"None",
                         "number":"None"
                     },
-                    "Send_Email":
-                    {
+                    "Send_Email":{
                         "To":"None",
                         "From":"None",
                         "Subject":"None"
-                        }
                     }
                 }
             },
-
             "service-3":{
                 "servicename":"illegalaccessdetection",
                 "scheduled":"True",
@@ -202,22 +197,24 @@
                     "Monday"
                 ],
                 "period":"None",
-                "dependency":[],
+                "dependency":[
+
+                ],
                 "environment":{
-                    "python3":true,
+                    "python3":false,
                     "tomcat":true,
                     "java":true,
-                    "c++":false,
+                    "c++":true,
                     "nginx":false,
-                    "python-kafka":true,
-                    "flask":true
+                    "flask":false
                 },
+                "python3-packages":[],
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"doorstep",
                         "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
+                            "lat":"None",
+                            "long":"None"
                         },
                         "sensor_address":{
                             "area":"iiith",
@@ -231,8 +228,8 @@
                     "sensor2":{
                         "sensor_name":"doorstep",
                         "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
+                            "lat":"None",
+                            "long":"None"
                         },
                         "sensor_address":{
                             "area":"iiith",
@@ -246,24 +243,20 @@
                 },
                 "action":{
                     "send_output_to_sensor":{
-                            "value":false,
-                        },
-                    "Output_display_to_user": "None",
-
+                        "value":false
+                    },
+                    "Output_display_to_user":"None",
                     "Send_SMS":{
                         "message":"None",
                         "number":"None"
                     },
-                    "Send_Email":
-                    {
+                    "Send_Email":{
                         "To":"pratiktiwari993@gmail.com",
                         "From":"test@gmail.com",
                         "Subject":"Illegal Access Notification"
-                        }
                     }
                 }
             },
-
             "service-4":{
                 "servicename":"classroomschedulingservice",
                 "scheduled":"True",
@@ -283,22 +276,24 @@
                     "Monday"
                 ],
                 "period":"None",
-                "dependency":[],
+                "dependency":[
+
+                ],
                 "environment":{
                     "python3":true,
-                    "tomcat":true,
-                    "java":true,
+                    "tomcat":false,
+                    "java":false,
                     "c++":false,
                     "nginx":false,
-                    "python-kafka":true,
                     "flask":true
                 },
+                "python3-packages":["sklearn", "pandas", "numpy", "SciPy"],
                 "sensor":{
                     "sensor1":{
                         "sensor_name":"attendance",
                         "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
+                            "lat":"None",
+                            "long":"None"
                         },
                         "sensor_address":{
                             "area":"iiith",
@@ -312,8 +307,8 @@
                     "sensor2":{
                         "sensor_name":"attendance",
                         "sensor_geolocation":{
-                            "lat" : "None",
-                            "long" : "None"
+                            "lat":"None",
+                            "long":"None"
                         },
                         "sensor_address":{
                             "area":"iiith",
@@ -327,22 +322,19 @@
                 },
                 "action":{
                     "send_output_to_sensor":{
-                            "value":false,
-                        },
-                    "Output_display_to_user": "None",
-
+                        "value":false
+                    },
+                    "Output_display_to_user":"None",
                     "Send_SMS":{
                         "number":"9773930038"
                     },
-                    "Send_Email":
-                    {
+                    "Send_Email":{
                         "To":"None",
                         "From":"None",
                         "Subject":"None"
-                        }
                     }
                 }
             }
-            
+        }
     }
 }
