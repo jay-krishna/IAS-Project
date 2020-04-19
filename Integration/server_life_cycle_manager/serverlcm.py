@@ -125,4 +125,4 @@ if __name__ == "__main__":        # on running python app.py
 	# service_life_cycle_port = int(args["service_life_cycle_port"])
 	# monitoring_ip = args["monitoring_ip"]
 	# monitoring_port = int(args["monitoring_port"])
-	app.run(debug=True,port=int(5054)) 
+	app.run(debug=False,port=int(5054)) 
