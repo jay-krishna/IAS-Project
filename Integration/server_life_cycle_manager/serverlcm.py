@@ -8,7 +8,7 @@ import time
 import sys
 app = Flask(__name__)
 
-testing_new_machine  = True
+testing_new_machine  = False
 lock_load = threading.Lock()
 lock_allocate = threading.Lock()
 
@@ -93,11 +93,13 @@ def allocate_server_kernel(serviceid):
 	global testing_new_machine
 	result,ip,username,password,port = load_balance()
 	# print("Result: {}".format(result))
-	if(testing_new_machine or result=="NO MACHINE"):
-		print("allocate new machine")
-		result,ip,username,password,port = allocate_new_machine()
+	# if(testing_new_machine or result=="NO MACHINE"):
+	# 	print("allocate new machine")
+	# 	result,ip,username,password,port = allocate_new_machine()
 
-	data={"result":result,"serviceid": serviceid,"serverip":ip,"machineusername":username,"password":password,"sshPort":port}
+	# data={"result":result,"serviceid": serviceid,"serverip":ip,"machineusername":username,"password":password,"sshPort":port}
+
+	data={"result":result,"serviceid": serviceid,"serverip":"127.0.0.1","machineusername":"username","password":"password","sshPort":"22"}
 
 	r=requests.post(url="http://"+service_life_cycle_ip+":"+str(service_life_cycle_port)+"/servicelcm/service/update",json=data)
 	print(r.json())
