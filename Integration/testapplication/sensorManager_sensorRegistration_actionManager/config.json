@@ -1,0 +1,189 @@
+{
+    "Application":
+    {
+        "username":"pratik",
+        "applicationname":"testapplication1",
+        "services":
+        {
+            "service-1":{
+                "servicename":"automatedacservice",
+                "scheduled":"True",
+                "filename":"automatedacservice.py",
+                "sensor":{
+                    "sensor1":{
+                        "sensor_name":"temperature",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"100"
+                        },
+                        "processing":{
+                            "data_rate":0
+                        }
+                    },
+                    "sensor2":{
+                        "sensor_name":"temperature",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"101"
+                        },
+                        "processing":{
+                            "data_rate":0
+                        }
+                    }
+                },
+                "action":{
+                    "send_output_to_sensor":{
+                            "value":false
+                    },
+                    "Output_display_to_user": true,
+
+                    "Send_SMS":{
+                        "message":"None",
+                        "number":"None"
+                    },
+                    "Send_Email":{
+                        "To":"None",
+                        "From":"None",
+                        "Subject":"None"
+                    }
+                }
+            },
+
+
+            "service-2":{
+                "servicename":"emergencyfirealaram",
+                "scheduled":"True",
+                "filename":"emergencyfirealaram.py",
+                "sensor":{
+                    "sensor1":{
+                        "sensor_name":"temperature",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"100"
+                        },
+                        "processing":{
+                            "data_rate":0
+                        }
+                    },
+                    "sensor2":{
+                        "sensor_name":"temperature",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"101"
+                        },
+                        "processing":{
+                            "data_rate":0
+                        }
+                    }
+                },
+                "action":{
+                    "send_output_to_sensor":{
+                            "value":true,
+                            "sensor":{
+                                "sensor-1":{
+                                    "sensor_name":"alarm",
+                                    "sensor_geolocation":{
+                                        "lat" : "None",
+                                        "long" : "None"
+                                    },
+                                    "sensor_address":{
+                                        "area" : "iiith",
+                                        "building" : "nilgiri",
+                                        "room_no" : "1"
+                                    }
+                                }
+                                
+                            }
+                    },
+                    "Output_display_to_user": "None",
+
+                    "Send_SMS":{
+                        "message":"None",
+                        "number":"None"
+                    },
+                    "Send_Email":{
+                        "To":"None",
+                        "From":"None",
+                        "Subject":"None"
+                    }
+                    
+                }
+            },
+
+            "service-3":{
+                "servicename":"illegalaccessdetection",
+                "scheduled":"True",
+                "filename":"illegalaccessdetection.py",
+                "sensor":{
+                    "sensor1":{
+                        "sensor_name":"doorstep",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"100"
+                        },
+                        "processing":{
+                            "data_rate":0
+                        }
+                    },
+                    "sensor2":{
+                        "sensor_name":"doorstep",
+                        "sensor_geolocation":{
+                            "lat" : "None",
+                            "long" : "None"
+                        },
+                        "sensor_address":{
+                            "area":"iiith",
+                            "building":"nilgiri",
+                            "room_no":"101"
+                        },
+                        "processing":{
+                            "data_rate":0
+                        }
+                    }
+                },
+                "action":{
+                    "send_output_to_sensor":{
+                            "value":"None"
+                    },
+                    "Output_display_to_user": "None",
+
+                    "Send_SMS":{
+                        "number":"9773930038",
+                        "message":"Illegal Access Detection in "
+                    },
+                    "Send_Email":{
+                        "To":"None",
+                        "From":"None",
+                        "Subject":"None"
+                    }
+                    
+                }
+            }
+        } 
+    }
+}
