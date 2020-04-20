@@ -53,7 +53,6 @@ def updateIntoDB(mycollection, machineID, record):
 	mycollection.update_one({'machineID' : machineID},{ "$set": record})
 
 def update_stats(topic, mycollection):
-
 	consumer = kafka.KafkaConsumer(topic, bootstrap_servers=[kafka_server])
 	for message in consumer:
 		data = (message.value).decode('utf-8')
@@ -88,10 +87,13 @@ def req_handler(app, port, mycollection):
 		data = {}
 		cnt = 0
 		server_load = []
-		cursor = mycollection.find()
-		for record in cursor:
-			load = getStats(mycollection, record)
-			server_load.append(load)
+		curr = getCurrTimestamp()
+		cursor = mycollection.find() 
+		for record in cursor: 
+			ts = record['timestamp']
+			if curr - ts < 3:
+				load = getStats(mycollection, record)
+				server_load.append(load)
 
 		data["n_servers"] = len(server_load)
 		data["server_load"] = server_load
@@ -105,7 +107,7 @@ def req_handler(app, port, mycollection):
 if __name__ == "__main__":
 	app = flask.Flask('sensor_app')
 	# port = sys.argv[1]
-	port=5055
+	port = 5055
 	client = connectMongoDB()
 	mycollection = getCollection(client)
 	req_t = threading.Thread(target = req_handler, args = (app, port, mycollection))
