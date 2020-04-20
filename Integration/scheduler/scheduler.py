@@ -393,7 +393,7 @@ if __name__ == "__main__":
 
     t2 = threading.Thread(target=dumping_thread) 
     t2.start()
-    app.run(debug=False,port=int(Myport)) 
+    app.run(debug=True,host="0.0.0.0",port=int(Myport)) 
 
 
 

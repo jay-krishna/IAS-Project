@@ -91,7 +91,7 @@ def allocate_new_machine():
 
 def allocate_server_kernel(serviceid):
 	global testing_new_machine
-	result,ip,username,password,port = load_balance()
+	# result,ip,username,password,port = load_balance()
 	# print("Result: {}".format(result))
 	# if(testing_new_machine or result=="NO MACHINE"):
 	# 	print("allocate new machine")
@@ -99,10 +99,10 @@ def allocate_server_kernel(serviceid):
 
 	# data={"result":result,"serviceid": serviceid,"serverip":ip,"machineusername":username,"password":password,"sshPort":port}
 
-	data={"result":result,"serviceid": serviceid,"serverip":"127.0.0.1","machineusername":"username","password":"password","sshPort":"22"}
-
+	data={"result":"ok","serviceid": serviceid,"serverip":"13.68.206.239","machineusername":"ias","password":"Asdfghjkl@123","sshPort":"22"}
+	print(data)
 	r=requests.post(url="http://"+service_life_cycle_ip+":"+str(service_life_cycle_port)+"/servicelcm/service/update",json=data)
-	print(r.json())
+	# print(r.json())
 
 
 @app.route("/serverlcm/allocate_server/<serviceid>")
@@ -125,4 +125,4 @@ if __name__ == "__main__":        # on running python app.py
 	# service_life_cycle_port = int(args["service_life_cycle_port"])
 	# monitoring_ip = args["monitoring_ip"]
 	# monitoring_port = int(args["monitoring_port"])
-	app.run(debug=False,port=int(5054)) 
+	app.run(debug=True,host="0.0.0.0",port=int(5054)) 
