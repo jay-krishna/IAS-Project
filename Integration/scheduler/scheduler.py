@@ -46,6 +46,7 @@ class Scheduler:
 
     def send_request_to_service_life_cyle(self,username,application_id,service_name,service_instance_id,type_):
         response = {"username":username,"applicationname":application_id,"servicename":service_name,"serviceId":self.main_service_id_dict[service_instance_id]}
+        print(response)
         if type_=="start":
             res = requests.post('http://'+service_life_cycle_ip+':'+str(service_life_cycle_port)+'/servicelcm/service/start', json=response)
         else:
