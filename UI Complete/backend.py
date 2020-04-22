@@ -3,6 +3,8 @@ from flask import render_template
 import requests
 import json
 
+from codes import twowaysensor
+
 sensorname = None
 
 app = Flask(__name__)
@@ -37,12 +39,14 @@ def query():
 	if(request.method == 'POST'):
 		if("username" in request.form.keys()):
 			username=request.form["username"]
-			sensorname=["one","two","three","four"]
+			sensorname = twowaysensor.getsensordata(username)
 			return render_template('/query/query.html',user=username,sensors=sensorname,displaytext=None)
 		else:
 			selected_sensorname=request.form["sensorname"]
 			querytype=request.form["querytype"]
-			return render_template('/query/query.html',user=None,sensors=sensorname,displaytext=querytype+" is : 32")
+			ans  = twowaysensor.getoutput(selected_sensorname,querytype)
+			text="{} for {} is {}".format(querytype,selected_sensorname,ans)
+			return render_template('/query/query.html',user=None,sensors=sensorname,displaytext=text)
 
 	return render_template('/query/query.html',user=None,sensors=None,displaytext=None)
 
