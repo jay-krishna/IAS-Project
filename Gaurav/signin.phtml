@@ -1,0 +1,58 @@
+<?php
+   if( $_GET["username"] || $_GET["password"] ) {
+      $username = $_GET["username"];
+      $password = $_GET["password"];
+      $dbservername = "localhost";
+      $dbusername = "admindb";
+      $dbpassword = "password";
+      // Create connection
+      $conn = new mysqli($dbservername, $dbusername, $dbpassword);
+      // Check connection
+      if ($conn->connect_error) {
+         die("Connection failed: " . $conn->connect_error);
+      } 
+      $dbname = "mydetails";
+      $dbassurance="create database if not exists ".$dbname;
+      $result = $conn->query($dbassurance);
+      $conn->close();
+      $conn1 = new mysqli($dbservername, $dbusername, $dbpassword, $dbdbname);
+      $tablename = "details";
+      $tableassurance="create table if not exists ".$tablename."(username varchar(30),token varchar(1000))";
+      $result = $conn1->query($tableassurance);
+      $payload->username = $username;
+      $payload->password = $password;
+      $jsonpayload = json_encode($payload);
+      $conn1->close();
+      $url = "http://0.0.0.0:5056/signup";
+      $ch = curl_init();
+      curl_setopt($ch,CURLOPT_URL, $url);
+      curl_setopt($ch,CURLOPT_POST, true);
+      curl_setopt($ch,CURLOPT_POSTFIELDS, $jsonpayload);
+      curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+      $result = curl_exec($ch);
+      $response = json_decode($result,true);
+      
+      if(response[status]=="success"){
+         $newURL = "http://0.0.0.0/index.phtml";
+         header('Location: '.$newURL);
+         exit();
+      }else{
+         echo "Login failed, ";
+         echo $response["message"];
+      }
+      
+        
+   }
+?>
+<html>
+   <body>
+   
+      <form action = "<?php $_PHP_SELF ?>" method = "GET" align="center">
+         Username: <input type = "text" name = "username" /><br><br>
+         Password: <input type = "text" name = "password" /><br><br>
+         <input type = "submit" />
+      </form>
+      
+   </body>
+</html>
+

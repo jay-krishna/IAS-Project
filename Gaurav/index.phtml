@@ -1,0 +1,84 @@
+<?php
+   if( $_GET["user"] || $_GET["pwd"] ) {
+      $usernameform = $_GET["user"];
+      $passwordform = $_GET["pwd"];
+      
+      $dbservername = "localhost";
+      $dbusername = "admindb";
+      $dbpassword = "password";
+      // Create connection
+      $conn = new mysqli($dbservername, $dbusername, $dbpassword);
+      // Check connection
+      if ($conn->connect_error) {
+         die("Connection failed: " . $conn->connect_error);
+      } 
+   
+      $dbname = "mydetails";
+      $dbassurance="create database if not exists ".$dbname;
+      $result = $conn->query($dbassurance);
+      $tablename = "details";
+      $conn->close();
+
+
+      $conn1 = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
+      if ($conn1->connect_error) {
+         die("Connection failed: " . $conn1->connect_error);
+      } 
+      $tableassurance="create table if not exists ".$tablename."(username varchar(30),token varchar(1000))";
+      $conn1->query($tableassurance)or die("A MySQL error has occurred.<br />Error: (" . mysql_errno() . ") " . mysql_error());
+      //echo $tableassurance;
+      //$conn1->close();
+      
+      $myObj->username = $usernameform;
+      $myObj->password = $passwordform;
+      $myJSON = json_encode($myObj);
+      //echo $myJSON;
+      
+      $url = "http://0.0.0.0:5056/login";
+      $ch = curl_init();
+      curl_setopt($ch,CURLOPT_URL, $url);
+      curl_setopt($ch,CURLOPT_POST, true);
+      curl_setopt($ch,CURLOPT_POSTFIELDS, $myJSON);
+      curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+      $result = curl_exec($ch);
+      $response = json_decode($result,true);
+      
+      if($response[status] == "success"){
+         $token = $response[token];
+         echo $token;
+         //need to do a check if we already have a tuple
+         $checkquery = "select * from ".$tablename;
+         $result = $conn1->query($checkquery);
+         if ($result->num_rows > 0){
+            //need to remove that entry
+            $removeEntry = "delete from ".$tablename." where 1";
+            $result = $conn1->query($removeEntry);
+         }
+         $insquery = "insert into ".$tablename." values(\"".$usernameform."\",\"".$token."\")";
+         echo $insquery;
+         $result = $conn1->query($insquery);
+         echo $result->num_rows;
+         $newURL = "http://0.0.0.0/dashboard.phtml";
+         $conn1->close();
+         header('Location: '.$newURL);
+         exit();
+      }else{
+         $conn1->close();
+         echo "Login failed, ";
+         echo $response["message"];
+      }
+      
+   }
+?>
+<html>
+   <body>
+   
+      <form action = "<?php $_PHP_SELF ?>" method = "GET" align="center">
+         Username: <input type = "text" name = "user" /><br><br>
+         Password: <input type = "text" name = "pwd" /><br><br>
+         <input type = "submit" />
+      </form>
+      
+   </body>
+</html>
+
