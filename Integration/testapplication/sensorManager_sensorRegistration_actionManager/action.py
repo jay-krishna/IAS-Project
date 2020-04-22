@@ -10,7 +10,7 @@ import sys
 
 registry_ip = 'localhost'
 registry_port = 27017
-sensor_client = 'demo2'
+sensor_client = 'demo123'
 sensor_document = 'sensor'
 kafka_platform_ip = 'localhost:9092'
 
@@ -24,7 +24,7 @@ def send_data_to_sensor(host_topic,service_id):
 	
 	for message in consumer:
 		msg = message.value.decode('utf-8')
-		print("msg on algo output ",msg)
+		# print("msg on algo output ",msg)
 
 		for i in host_topic:
 			temp = i.split(' ')
@@ -53,8 +53,11 @@ def SendEmail(to,subject,text,serviceid):
 		text = classroom + " " + text
 		
 		message = 'Subject: {}\n\n{}'.format(subject, text)
-		s.login("pratiktiwari993@gmail.com", "jimmyjimmy") 
-		s.sendmail("pratiktiwari993@gmail.com", to, message) 
+		# s.login("pratiktiwari993@gmail.com", "jimmyjimmy")
+		to = to.split(',')
+		for i in to:
+			print("mail sent to ",str(i))
+			# s.sendmail("pratiktiwari993@gmail.com", str(i), message) 
 		s.quit() 
 		print("Mail sent")
 
@@ -130,7 +133,7 @@ def fun():
 			#directly read from serviceid (request Manager)
 			pass
 		
-		if(i == 'Send_Email' and d[i]['To'] != "None"):
+		if(i == 'Send_Email' and d[i]['From'] != "None"):
 			to = d['Send_Email']['To']
 			subject = d['Send_Email']['Subject']
 			text = d['Send_Email']['Text']
@@ -146,4 +149,4 @@ def fun():
 	return temp
 
 if __name__ == '__main__':
-   app.run(debug=True,port = sys.argv[1])
+   app.run(debug=True,port = 5052)

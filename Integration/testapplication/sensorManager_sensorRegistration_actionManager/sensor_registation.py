@@ -2,6 +2,7 @@ from flask import Flask,request,jsonify
 import requests
 import sys 
 import json
+import os
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -10,7 +11,7 @@ app = Flask(__name__)
 
 registry_ip = 'localhost'
 registry_port = 27017
-collection_name = 'demo2'
+collection_name = 'gaurav'
 
 def filter(d):
 	for i in d:
@@ -62,12 +63,12 @@ def fun():
 	mydb = client[collection_name]
 	mycol = mydb["sensor"]
 
+	print(d)
 	for i in d:
-		print(d[i])
 		mycol.insert_one(d[i])
 	
 	ack={'msg':'Sensor Registered'}
 	return ack
 
 if __name__ == '__main__':
-   app.run(debug=True,port=sys.argv[1])
+	app.run(port=5051)

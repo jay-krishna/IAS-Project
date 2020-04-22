@@ -40,7 +40,9 @@
 					"kafka_broker_ip":"127.0.0.1:9092",
 					"kafka_topic":"temperature1_in"
 				}
-			}
+			},
+		"api":"http://127.0.0.1:9000/temperature1"
+
 	},
 
 	"sensor2" :{
@@ -89,7 +91,9 @@
 					"kafka_broker_ip":"127.0.0.1:9092",
 					"kafka_topic":"temperature2_in"
 				}
-			}
+			},
+		"api":"http://127.0.0.1:9001/temperature2"
+
 	},
 
 	"sensor3" :{
@@ -114,7 +118,7 @@
 					"kafka":
 						{
 							"broker_ip":"127.0.0.1:9092",
-							"topic":"doorstep_out"
+							"topic":"doorstep1_out"
 						},
 					"mongo_db":
 						{
@@ -136,9 +140,10 @@
 				"kafka":
 				{
 					"kafka_broker_ip":"127.0.0.1:9092",
-					"kafka_topic":"doorstep_in"
+					"kafka_topic":"doorstep1_in"
 				}
-			}
+			},
+		"api": "http://127.0.0.1:9000/temprature1"
 	},
 
 	"sensor4" :{
@@ -185,7 +190,7 @@
 				"kafka":
 				{
 					"kafka_broker_ip":"127.0.0.1:9092",
-					"kafka_topic":"doorstep2_out"
+					"kafka_topic":"doorstep2_in"
 				}
 			}
 	},

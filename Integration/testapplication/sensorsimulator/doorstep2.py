@@ -10,12 +10,11 @@ def sensor():
 	producer = KafkaProducer(bootstrap_servers=['127.0.0.1:9092'])
 	l = [0,0,0,0,0,1,0,0,0,0]
 	while True:
-
 		n = random.choice(l)
-		msg = 'nilgiri roomno: 101' + " " + str(n)
+		msg = 'nilgiri_roomno:101' + " " + str(n)
 		producer.send(str('doorstep2_out'), bytes(str(msg),"utf-8"))
 		producer.flush() 
-		time.sleep(2)
+		time.sleep(5)
 
 def main():
 	t1 = threading.Thread(target=sensor, args=())

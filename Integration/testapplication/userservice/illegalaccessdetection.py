@@ -15,13 +15,13 @@ def main():
 	for message in consumer:
 		s = message.value.decode('utf-8')
 		temp = s.split(' ')
-		status = temp[1]
+		status = int(temp[1])
 		print(s)
 		if status == 1:
 			msg = str(temp[0]) + " " + str(1)
 			producer.send(str(output_topic), bytes(str(msg),"utf-8"))
 			producer.flush() 
-			time.sleep(1)
+			time.sleep(5)
 
 		
 			

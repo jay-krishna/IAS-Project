@@ -14,14 +14,14 @@ def main():
 	for message in consumer:
 		s = message.value.decode('utf-8')
 		temp = s.split(' ')
-		temprature = temp[1]
-
+		temprature = int(temp[1])
+		print("fire alaram algo getting ",s)
 		if int(temprature) > 200:
-			print('Fire Alarm ')
+			print('Fire Alarm temperature exceed 200')
 			msg = str(temp[0]) + " " + str(temprature)
 			producer.send(str(output_topic), bytes(str(msg),"utf-8"))
 			producer.flush() 
-			time.sleep(1)
+			time.sleep(5)
 
 
 if __name__ == '__main__':

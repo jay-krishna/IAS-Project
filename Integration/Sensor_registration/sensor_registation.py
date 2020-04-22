@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 registry_ip = 'localhost'
 registry_port = 27017
-collection_name = 'demo1'
+collection_name = 'demo231'
 
 def filter(d):
 	for i in d:

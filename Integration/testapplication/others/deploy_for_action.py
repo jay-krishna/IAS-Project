@@ -8,13 +8,13 @@ def main():
 	file=open("config.json","r")
 	data=json.load(file)
 
-	URL = "http://127.0.0.1:5080/actionmanager"
+	URL = "http://13.68.206.239:5052/actionmanager"
 
 	req = {
-	'username' : 'pratik',
+	'username' : 'dhamo',
 	'applicationname' : 'testapplication1',
-	'servicename' : 'automatedacservice',
-	'serviceid' : 'pratik_testapplication1_automatedacservice',
+	'servicename' : 'emergencyfirealaram',
+	'serviceid' : 'dhamo_testapplication1_emergencyfirealaram',
 	'config_file' : data,
 	'sensor_host' : ['127.0.0.1:9092 temperature1_in', '127.0.0.1:9092 temperature2_in']
 	}
