@@ -37,7 +37,7 @@ def signup():
 			username=request.form["username"]
 			password=request.form["password"]
 			if(len(username) >0 and len(password)>0):
-			
+				validate.signup(username,password)
 				return redirect('/login')
 			else:
 				return render_template('/signup/signup.html',authcode="error")
