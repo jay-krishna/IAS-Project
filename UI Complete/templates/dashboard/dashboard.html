@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="refresh" content="5">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -50,50 +51,33 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center">Application 1</td>
-                    <td class="text-center">Service 1</td>
-                    <td class="text-center">Not Running</td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-success" style="width:50%;">Start</button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-info" style="width:50%;">Output</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center">Application 1</td>
-                    <td class="text-center">Service 2</td>
-                    <td class="text-center">Not Running</td>
-                    <td class="text-center">
-                        <button type="button" class="btn disabled" style="width:50%;" disabled>N/A</button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-info" style="width:50%;">Output</button>
-                    </td>
-                </tr>
-                <tr class="table-success">
-                    <td class="text-center">Application 1</td>
-                    <td class="text-center">Service 3</td>
-                    <td class="text-center">Running</td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-danger" style="width:50%;">Stop</button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-info" style="width:50%;">Output</button>
-                    </td>
-                </tr>
-                <tr class="table-success">
-                    <td class="text-center">Application 1</td>
-                    <td class="text-center">Service 4</td>
-                    <td class="text-center">Running</td>
-                    <td class="text-center">
-                        <button type="button" class="btn disabled" style="width:50%;" disabled>N/A</button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-info" style="width:50%;">Output</button>
-                    </td>
-                </tr>
+                {% for _ in data %}
+                {% if _[2]=='Running' %}
+                    <tr class="table-success">
+                {% else %}
+                    <tr>
+                {% endif %}
+                        <td class="text-center">{{ _[0] }}</td>
+                        <td class="text-center">{{ _[1] }}</td>
+                        <td class="text-center">{{ _[2] }}</td>
+                        {% if _[3]=='True' %}
+                            <td class="text-center">
+                                <button type="button" class="btn disabled" style="width:50%;" disabled>N/A</button>
+                            </td>
+                        {% elif _[2]=='Running' %}
+                            <td class="text-center">
+                                <button type="button" class="btn btn-danger" style="width:50%;">Stop</button>
+                            </td>
+                        {% else %}
+                            <td class="text-center">
+                                <button type="button" class="btn btn-success" style="width:50%;">Start</button>
+                            </td>
+                        {% endif %}
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info" style="width:50%;">Output</button>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

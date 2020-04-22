@@ -3,7 +3,7 @@ from flask import render_template
 import requests
 import json
 
-from codes import twowaysensor
+from codes import twowaysensor,dashboardupdate
 
 sensorname = None
 
@@ -19,7 +19,8 @@ def signup():
 
 @app.route("/dashboard",methods=['GET','POST'])
 def dashboard():
-	return render_template('/dashboard/dashboard.html')
+	send_data=dashboardupdate.update()
+	return render_template('/dashboard/dashboard.html',data=send_data,length=len(send_data))
 
 @app.route("/output",methods=['GET','POST'])
 def output():
