@@ -8,6 +8,6 @@ def update():
 	for app in data:
 		app_name=app["appname"]
 		for _ in app["data"]:
-			send_data.append([app_name,_["servicename"],_["status"],_["scheduled"],_["serviceid"]])
+			send_data.append([app_name,_["servicename"],_["status"],_["scheduled"],_["serviceid"],app_name+";"+_["serviceid"]])
 
 	return send_data

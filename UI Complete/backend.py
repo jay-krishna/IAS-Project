@@ -1,12 +1,13 @@
-from flask import Flask,request,jsonify,redirect
+from flask import Flask,request,jsonify,redirect,url_for
 from flask import render_template
 import os
 import requests
 import json
 
-from codes import twowaysensor,dashboardupdate,validate
+from codes import twowaysensor,dashboardupdate,validate,fetchoutput
 
 sensorname = None
+logged_username=None
 
 #change dest path
 dest = "/home/pratik/"
@@ -23,6 +24,7 @@ def login():
 			status=validate.auth(username,password)
 
 		if(status):
+			logged_username=username
 			return redirect('/dashboard')
 		else:
 			return render_template('/login/login.html',authcode="error")
@@ -47,11 +49,20 @@ def signup():
 
 @app.route("/dashboard",methods=['GET','POST'])
 def dashboard():
+	if(request.method == 'POST'):
+		
+
 	send_data=dashboardupdate.update()
 	return render_template('/dashboard/dashboard.html',data=send_data,length=len(send_data))
 
 @app.route("/output",methods=['GET','POST'])
 def output():
+	if(request.method == 'POST'):
+		if(request.form["required"]=="send"):
+			return jsonify(fetchoutput.output())
+		else:
+			print(request.form["required"])
+			return jsonify(url_for('dashboard'))
 	return render_template('/output/output.html')
 
 @app.route("/sensor",methods=['GET','POST'])
@@ -78,7 +89,7 @@ def sensor():
 		os.system(f'rm {jsonpath}')
 		return render_template('/sensor/sensor.html',displaytext=text)
 
-	return render_template('/sensor/sensor.html')
+	return render_template('/sensor/sensor.html',displaytext=None)
 
 @app.route("/application",methods=['GET','POST'])
 def application():
@@ -100,7 +111,6 @@ def query():
 			return render_template('/query/query.html',user=None,sensors=sensorname,displaytext=text)
 
 	return render_template('/query/query.html',user=None,sensors=None,displaytext=None)
-
 
 
 if __name__ == "__main__":

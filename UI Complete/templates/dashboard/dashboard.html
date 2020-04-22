@@ -13,6 +13,20 @@
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/common.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/icon type">
+
+    <script type = "text/JavaScript">
+    	$(document).ready(function() {
+    		$("#clear").click(function(){
+            $.ajax({
+                url:"{{ url_for('dashboard') }}",
+                dataType: 'json',
+                data:{required:'clear'},
+                type:'POST',
+            });
+          });
+    	});
+
+    </script>
 </head>
 
 <body class="body-inside">
@@ -66,15 +80,15 @@
                             </td>
                         {% elif _[2]=='Running' %}
                             <td class="text-center">
-                                <button type="button" class="btn btn-danger" style="width:50%;">Stop</button>
+                                <button id="servicestop" type="button" class="btn btn-danger" style="width:50%;" value="{{ _[5] }}">Stop</button>
                             </td>
                         {% else %}
                             <td class="text-center">
-                                <button type="button" class="btn btn-success" style="width:50%;">Start</button>
+                                <button id="servicestart" type="button" class="btn btn-success" style="width:50%;" value="{{ _[5] }}">Start</button>
                             </td>
                         {% endif %}
                         <td class="text-center">
-                            <button type="button" class="btn btn-info" style="width:50%;">Output</button>
+                            <button type="button" class="btn btn-info" style="width:50%;" value="{{ _[5] }}">Output</button>
                         </td>
                     </tr>
                 {% endfor %}

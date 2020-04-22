@@ -13,33 +13,57 @@
     <title>Output</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/common.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/icon type">
+
+
+    <script type = "text/JavaScript">
+
+        $(document).ready(function() {
+          setInterval(function(){
+            $.ajax({
+                url:"{{ url_for('output') }}",
+                dataType: 'json',
+                data:{required:'send'},
+                type:'POST',
+                success: function(data){
+                    var i=0;
+                    for(i=0;i<data.length;++i){
+                        $("#datatable").append('<tr><td class="text-center">'+data[i]+'</td></tr>');
+                    }
+                }
+            });
+          },2000);
+
+          $("#clear").click(function(){
+            $.ajax({
+                url:"{{ url_for('output') }}",
+                dataType: 'json',
+                data:{required:'clear'},
+                type:'POST',
+                success: function(data){
+                    window.location = data;
+                }
+            });
+          });
+        });
+    </script>
 </head>
 
 <body class="body-inside">
     <div class="center">
         <h1>Sensor Output</h1>
-        <button type="button" class="btn btn-danger" style="margin-top:2rem; margin-bottom: 2rem;width:10rem;">Exit</button>
+        <button id="clear" type="button" class="btn btn-danger" style="margin-top:2rem; margin-bottom: 2rem;width:10rem;">Exit</button>
     </div>
     <div id="sensor-data" class="container">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" id="datatable">
             <thead class="thead-dark">
                 <tr>
                     <th class="text-center">Output</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <!-- <tr>
                     <td class="text-center">Output 1</td>
-                </tr>
-                <tr>
-                    <td class="text-center">Output 2</td>
-                </tr>
-                <tr>
-                    <td class="text-center">Output 3</td>
-                </tr>
-                <tr>
-                    <td class="text-center">Output 4</td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
     </div>

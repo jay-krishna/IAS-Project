@@ -1,0 +1,60 @@
+[
+    {
+        "data": [
+            {
+                "serviceid": "demo1",
+                "servicename": "abc",
+                "status": "Running",
+                "scheduled": "True"
+            },
+            {
+                "serviceid": "demo1",
+                "servicename": "abc",
+                "status": "Running",
+                "scheduled": "False"
+            },
+            {
+                "serviceid": "demo1",
+                "servicename": "abc",
+                "status": "Stopped",
+                "scheduled": "True"
+            },
+            {
+                "serviceid": "demo1",
+                "servicename": "abc",
+                "status": "Stopped",
+                "scheduled": "False"
+            }
+        ],
+        "appname": "App1"
+    },
+    {
+        "data": [
+            {
+                "serviceid": "demo1",
+                "servicename": "abc",
+                "status": "Running",
+                "scheduled": "True"
+            },
+            {
+                "serviceid": "demo1",
+                "servicename": "abc",
+                "status": "Running",
+                "scheduled": "False"
+            },
+            {
+                "serviceid": "demo1",
+                "servicename": "abc",
+                "status": "Stopped",
+                "scheduled": "True"
+            },
+            {
+                "serviceid": "demo1",
+                "servicename": "abc",
+                "status": "Stopped",
+                "scheduled": "False"
+            }
+        ],
+        "appname": "App2"
+    }
+]
