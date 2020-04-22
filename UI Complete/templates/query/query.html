@@ -18,7 +18,7 @@
     <div id="ias">
         <ul class="nav nav-tabs nav-justified">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" href="{{ url_for('application') }}">Dashboard</a>
+                <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" href="{{ url_for('application') }}">Application Upload</a>
@@ -27,7 +27,7 @@
                 <a class="nav-link" href="{{ url_for('sensor') }}">Sensor Registration</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" href="{{ url_for('query') }}">Sensor Query</a>
+                <a class="nav-link active" href="{{ url_for('query') }}">Sensor Query</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" href="{{ url_for('login') }}">Logout</a>
@@ -86,7 +86,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Fetch Data </button>
+                        {% if sensors %}
+                            <button type="submit" class="btn btn-primary btn-block"> Fetch Data </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary btn-block" disabled> Fetch Data </button>
+                        {% endif %}
                     </div>
                 </form>
             </article>
