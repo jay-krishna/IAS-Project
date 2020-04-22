@@ -4,7 +4,7 @@ import os
 import requests
 import json
 
-from codes import twowaysensor,dashboardupdate
+from codes import twowaysensor,dashboardupdate,validate
 
 sensorname = None
 
@@ -15,11 +15,35 @@ app = Flask(__name__)
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-	return render_template('/login/login.html')
+	if(request.method == 'POST'):
+		status=False
+		if("username" in request.form.keys() and "password" in request.form.keys()):
+			username=request.form["username"]
+			password=request.form["password"]
+			status=validate.auth(username,password)
+
+		if(status):
+			return redirect('/dashboard')
+		else:
+			return render_template('/login/login.html',authcode="error")
+
+	return render_template('/login/login.html',authcode=None)
 
 @app.route("/signup",methods=['GET','POST'])
 def signup():
-	return render_template('/signup/signup.html')
+	if(request.method == 'POST'):
+		print(request.form)
+		if("username" in request.form.keys() and "password" in request.form.keys()):
+			username=request.form["username"]
+			password=request.form["password"]
+			if(len(username) >0 and len(password)>0):
+			
+				return redirect('/login')
+			else:
+				return render_template('/signup/signup.html',authcode="error")
+		else:
+			return render_template('/login/login.html',authcode=None)
+	return render_template('/signup/signup.html',authcode=None)
 
 @app.route("/dashboard",methods=['GET','POST'])
 def dashboard():

@@ -91,16 +91,22 @@
 }
 
 .message {
-    visibility: hidden;
-    /*visibility: visible;*/
+    /*visibility: hidden;*/
+    visibility: visible;
     /*color: green;*/
     /*color: red;*/
 }
 
 .message-show-sucess {
-    visibility: visible;
-    color: green;
-    /*color: red;*/
+    visibility: hidden;
+    /*color: green;*/
+    color: red;
+}
+
+.message-show-error {
+    visibility: hidden;
+    /*color: green;*/
+    color: red;
 }
 
 .divider-text {
