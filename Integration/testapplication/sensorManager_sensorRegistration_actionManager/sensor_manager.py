@@ -155,12 +155,15 @@ def fun1():
 	db = client[sensor_client]
 	d = list(db['sensor'].find({'user_id':user_id}))
 	
+	print(d)
+
 	for i in d:
+		print(i)
 		del i['_id']
 		del i['data_dump']
 		del i['sensor_data_type']
 		del i['sensor_host']
-		del ['user_id']
+		del i['user_id']
 	
 	return jsonify(d)
 

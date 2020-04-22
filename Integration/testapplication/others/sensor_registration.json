@@ -142,8 +142,7 @@
 					"kafka_broker_ip":"127.0.0.1:9092",
 					"kafka_topic":"doorstep1_in"
 				}
-			},
-		"api": "http://127.0.0.1:9000/temprature1"
+			}
 	},
 
 	"sensor4" :{
