@@ -1,0 +1,27 @@
+<?php
+    if( $_GET["username"] || $_GET["password"] ) {
+        $username = $_GET["username"];
+        $password = $_GET["password"];
+        session_start();
+        $_SESSION["username"] = $username;
+        $_SESSION["password"] = $password;
+        echo $_SESSION["username"]; 
+        $newURL = "http://127.0.0.1/index.html";
+         header('Location: '.$newURL);
+         exit();
+        
+   }
+?>
+<html>
+   <body>
+   
+      <form action = "<?php $_PHP_SELF ?>" method = "GET" align="center">
+         Username: <input type = "text" name = "username" /><br><br>
+         Password: <input type = "text" name = "password" /><br><br>
+         <input type = "submit" />
+      </form>
+      
+   </body>
+</html>
+
+        
