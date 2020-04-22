@@ -10,7 +10,7 @@ import random
 
 registry_ip = 'localhost'
 registry_port = 27017
-sensor_client = 'demo2'
+sensor_client = 'demo123'
 sensor_document = 'sensor'
 kafka_platform_ip = 'localhost:9092'
 
@@ -21,9 +21,10 @@ def dump_data(ip,topic ,service_id ,sensor_id ,temptopic,rate):
 
 	producer = KafkaProducer(bootstrap_servers=[kafka_platform_ip])
 	consumer = KafkaConsumer(str(topic),bootstrap_servers=[ip],auto_offset_reset = "latest")
-	# print("temptopic ",temptopic)
+	print("temptopic ",temptopic)
 	for message in consumer:
 		msg = message.value.decode('utf-8')
+		# print(msg)
 		# dump data in temporary topic like " msg > sensor_host_id(127.0.0.1:9092 topic)"
 		producer.send(temptopic, bytes(msg,"utf-8"))    
 		producer.flush()
@@ -151,14 +152,18 @@ def fun1():
 	user_id  = data['username']
 
 	client = MongoClient(registry_ip ,registry_port,maxPoolSize=50)
-	db = client[collection_name]
-	d = list(db['sensor'].find({}))
+	db = client[sensor_client]
+	d = list(db['sensor'].find({'user_id':user_id}))
 	
+	print(d)
+
 	for i in d:
+		print(i)
 		del i['_id']
 		del i['data_dump']
 		del i['sensor_data_type']
 		del i['sensor_host']
+		del i['user_id']
 	
 	return jsonify(d)
 
@@ -176,7 +181,6 @@ def fun():
 	#get sensor part from the config
 	d = getsensor(d,servicename)
 	d=filter(d)
-
 	# #store each query in a list	
 	query=[]
 	data_rate = []
@@ -188,9 +192,9 @@ def fun():
 
 	# #get sensor topic and host topic
 	sensor_topic,host_topic = resolver(query,user_id)
-	
+	print("resolver ",sensor_topic)
 	# # create temp topic
-	temptopic = serviceid + str(random.randrange(0,20))
+	temptopic = serviceid + str(random.randrange(0,2000))
 	# print(temptopic)
 	
 	# Open thread for execution
@@ -230,4 +234,4 @@ if __name__ == '__main__':
 	except IOError:
 		print("No File")
 	    #do what you want if there is an error with the file opening
-	app.run(debug=True,port=sys.argv[1])
+	app.run(host="0.0.0.0",port=5050)

@@ -14,7 +14,7 @@ def sensor():
 		msg = 'nilgiri_roomno:100' + " " + str(n)
 		producer.send(str('doorstep1_out'), bytes(str(msg),"utf-8"))
 		producer.flush() 
-		time.sleep(2)
+		time.sleep(5)
 
 def main():
 	t1 = threading.Thread(target=sensor, args=())

@@ -16,13 +16,14 @@ def main():
 		s = message.value.decode('utf-8')
 
 		temp = s.split()
-		x = temp[1]
-		y = temp[2]
-
-		print('Msg Proff : ' + str(x))
-		print('Msg Acad Office : ' + str(y))
-			
-
+		room = temp[0]
+		strength = int(temp[1)]
+		seat = int(temp[2])
+		empty = seat - strength
+		print(f'{room} : Strength of class is {strength} ,Number of Seat is {seat} ,Empty Seat is {empty}')
+		if(empty > 50):
+			print('Msg Proff : ' + str(strength))
+			print('Msg Acad Office : ' + str(seat))
 
 if __name__ == '__main__':
 	main()

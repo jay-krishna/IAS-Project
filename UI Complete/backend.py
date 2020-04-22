@@ -1,11 +1,15 @@
 from flask import Flask,request,jsonify,redirect
 from flask import render_template
+import os
 import requests
 import json
 
 from codes import twowaysensor,dashboardupdate
 
 sensorname = None
+
+#change dest path
+dest = "/home/pratik/"
 
 app = Flask(__name__)
 
@@ -28,6 +32,28 @@ def output():
 
 @app.route("/sensor",methods=['GET','POST'])
 def sensor():
+	if(request.method == 'POST'):
+		username = request.form["sensorregistration"]
+		f = request.files['file']  
+		f.save(os.path.join(dest, f.filename))
+
+		jsonpath = dest+"sensor_registration.json"
+		f = open (jsonpath, "r")
+
+		config_data=json.load(f)
+
+		reply = dict()
+		reply["username"] = username
+		reply["config_file"] = config_data
+		req = requests.post(url="http://13.68.206.239:5051/sensorregistration",json=reply) 
+		data = req.json()
+		if(data['msg'] == 'Sensor Registered'):
+			text = "sensors registered"
+		else:
+			text = "Some Error"
+		os.system(f'rm {jsonpath}')
+		return render_template('/sensor/sensor.html',displaytext=text)
+
 	return render_template('/sensor/sensor.html')
 
 @app.route("/application",methods=['GET','POST'])
