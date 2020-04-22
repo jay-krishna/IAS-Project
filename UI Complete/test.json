@@ -3,25 +3,25 @@
         "data": [
             {
                 "serviceid": "demo1",
-                "servicename": "abc",
+                "servicename": "abc1",
                 "status": "Running",
                 "scheduled": "True"
             },
             {
-                "serviceid": "demo1",
-                "servicename": "abc",
+                "serviceid": "demo2",
+                "servicename": "abc2",
                 "status": "Running",
                 "scheduled": "False"
             },
             {
-                "serviceid": "demo1",
-                "servicename": "abc",
+                "serviceid": "demo3",
+                "servicename": "abc3",
                 "status": "Stopped",
                 "scheduled": "True"
             },
             {
-                "serviceid": "demo1",
-                "servicename": "abc",
+                "serviceid": "demo4",
+                "servicename": "abc4",
                 "status": "Stopped",
                 "scheduled": "False"
             }
@@ -32,25 +32,25 @@
         "data": [
             {
                 "serviceid": "demo1",
-                "servicename": "abc",
+                "servicename": "abc1",
                 "status": "Running",
                 "scheduled": "True"
             },
             {
-                "serviceid": "demo1",
-                "servicename": "abc",
+                "serviceid": "demo2",
+                "servicename": "abc2",
                 "status": "Running",
                 "scheduled": "False"
             },
             {
-                "serviceid": "demo1",
-                "servicename": "abc",
+                "serviceid": "demo3",
+                "servicename": "abc3",
                 "status": "Stopped",
                 "scheduled": "True"
             },
             {
-                "serviceid": "demo1",
-                "servicename": "abc",
+                "serviceid": "demo4",
+                "servicename": "abc4",
                 "status": "Stopped",
                 "scheduled": "False"
             }

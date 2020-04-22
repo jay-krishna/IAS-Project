@@ -8,6 +8,7 @@ from codes import twowaysensor,dashboardupdate,validate,fetchoutput
 
 sensorname = None
 logged_username=None
+identifier=None
 
 #change dest path
 dest = "/home/pratik/"
@@ -49,20 +50,32 @@ def signup():
 
 @app.route("/dashboard",methods=['GET','POST'])
 def dashboard():
+	global identifier
 	if(request.method == 'POST'):
-		
+		action=request.form["action"]
+		identifier=request.form["value"]
+		if(action=="start"):
+			print("start service")
+		elif(action=="stop"):
+			print("stop service")
+		else:
+			print("redirect")
+			return jsonify(url_for('output'))
 
+		return jsonify(["ok"])
 	send_data=dashboardupdate.update()
 	return render_template('/dashboard/dashboard.html',data=send_data,length=len(send_data))
 
 @app.route("/output",methods=['GET','POST'])
 def output():
+	print("yes")
 	if(request.method == 'POST'):
 		if(request.form["required"]=="send"):
 			return jsonify(fetchoutput.output())
 		else:
 			print(request.form["required"])
 			return jsonify(url_for('dashboard'))
+	print("here")
 	return render_template('/output/output.html')
 
 @app.route("/sensor",methods=['GET','POST'])

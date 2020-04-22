@@ -92,7 +92,7 @@
 
 .message {
     /*visibility: hidden;*/
-    visibility: visible;
+    visibility: visible !important;
     /*color: green;*/
     /*color: red;*/
 }
