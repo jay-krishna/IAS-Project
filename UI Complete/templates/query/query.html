@@ -48,10 +48,8 @@
                                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                             </div>
                             {% if not user %}
-                        	    <input name="username" class="form-control" placeholder="Username" type="text">
-                        	{% else %}
-                        		<input name="username" class="form-control" placeholder="Username" type="text" value={{ user }}>
-                        	{% endif %}
+                            <input name="username" class="form-control" placeholder="Username" type="text"> {% else %}
+                            <input name="username" class="form-control" placeholder="Username" type="text" value={{ user }}> {% endif %}
                         </div>
                     </div>
                     <div class="form-group">
@@ -66,21 +64,17 @@
         <div class="card">
             <article class="card-body">
                 <h4 class="card-title text-center mb-4 mt-1">Sensor Data Query</h4>
-                <hr>
-                {% if displaytext %}
-                	<p class="text-success text-center message-show-sucess">{{ displaytext }}</p>
+                <hr> {% if displaytext %}
+                <p class="text-success text-center message-show-sucess">{{ displaytext }}</p>
                 {% else %}
-                	<p class="text-success text-center message">text</p>
+                <p class="text-success text-center message">text</p>
                 {% endif %}
                 <form action="{{ url_for('query') }}" method="post">
                     <div class="form-group">
                         <label>Select sensor</label>
                         <select class="form-control" name="sensorname">
-                        	{% if sensors %}
-	                        	{% for sensor in sensors %}
-							        <option value="{{sensor}}">{{sensor}}</option>"
-							    {% endfor %}
-						    {% endif %}
+                            {% if sensors %} {% for sensor in sensors %}
+                            <option value="{{sensor}}">{{sensor}}</option>" {% endfor %} {% endif %}
                         </select>
                     </div>
                     <div class="form-group">
