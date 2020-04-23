@@ -3,7 +3,7 @@ from flask import render_template
 import os
 import requests
 import json
-# import mysql.connector
+import mysql.connector
 import zipfile
 import shutil
 
