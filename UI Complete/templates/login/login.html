@@ -19,11 +19,10 @@
         <div class="card">
             <article class="card-body">
                 <h4 class="card-title text-center mb-4 mt-1">Login</h4>
-                <hr>
-                {% if authcode %}
-                    <p class="text-danger text-center">Invalid Credentials</p>
+                <hr> {% if authcode %}
+                <p class="text-danger text-center">Invalid Credentials</p>
                 {% else %}
-                    <p style="visibility:hidden;">text</p>
+                <p style="visibility:hidden;">text</p>
                 {% endif %}
                 <form action="{{ url_for('login') }}" method="post">
                     <div class="form-group">

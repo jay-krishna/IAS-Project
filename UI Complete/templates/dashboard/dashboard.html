@@ -14,29 +14,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/common.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/icon type">
 
-    <script type = "text/JavaScript">
-    	$(document).ready(function() {
-
-			$("button").click(function(){
-				var action=this.name;
-				var value=this.value;
-				
-				$.ajax({
-					data :{
-						'action':action,
-						'value':value
-					},
-					type : 'POST',
-					url : "{{ url_for('dashboard') }}",
-					dataType: 'json',
-					success: function(data){
-						if(action=="output"){
-							window.location = data;
-						}
-					}
-				});			
-			});
-		});
+    <script type="text/JavaScript">
+        $(document).ready(function() { $("button").click(function(){ var action=this.name; var value=this.value; $.ajax({ data :{ 'action':action, 'value':value }, type : 'POST', url : "{{ url_for('dashboard') }}", dataType: 'json', success: function(data){ if(action=="output"){ window.location = data; } } }); }); });
     </script>
 </head>
 
@@ -76,33 +55,32 @@
                 </tr>
             </thead>
             <tbody>
-                {% for _ in data %}
-                {% if _[2]=='Running' %}
-                    <tr class="table-success">
-                {% else %}
+                {% for _ in data %} {% if _[2]=='Running' %}
+                <tr class="table-success">
+                    {% else %}
                     <tr>
-                {% endif %}
+                        {% endif %}
                         <td class="text-center">{{ _[0] }}</td>
                         <td class="text-center">{{ _[1] }}</td>
                         <td class="text-center">{{ _[2] }}</td>
                         {% if _[3]=='True' %}
-                            <td class="text-center">
-                                <button type="button" class="btn disabled" style="width:50%;" disabled>N/A</button>
-                            </td>
+                        <td class="text-center">
+                            <button type="button" class="btn disabled" style="width:50%;" disabled>N/A</button>
+                        </td>
                         {% elif _[2]=='Running' %}
-                            <td class="text-center">
-                                <button type="button" type="button" class="btn btn-danger" style="width:50%;" name="stop" value="{{ _[5] }}">Stop</button>
-                            </td>
+                        <td class="text-center">
+                            <button type="button" type="button" class="btn btn-danger" style="width:50%;" name="stop" value="{{ _[5] }}">Stop</button>
+                        </td>
                         {% else %}
-                            <td class="text-center">
-	                            <button type="button" type="button" class="btn btn-success" style="width:50%;" name="start" value="{{ _[5] }}">Start</button>
-                            </td>
+                        <td class="text-center">
+                            <button type="button" type="button" class="btn btn-success" style="width:50%;" name="start" value="{{ _[5] }}">Start</button>
+                        </td>
                         {% endif %}
                         <td class="text-center">
                             <button type="button" type="button" class="btn btn-info" style="width:50%;" name="output" value="{{ _[5] }}">Output</button>
                         </td>
                     </tr>
-                {% endfor %}
+                    {% endfor %}
             </tbody>
         </table>
     </div>

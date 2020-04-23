@@ -38,7 +38,9 @@
         <div class="card">
             <article class="card-body">
                 <h4 class="card-title text-center mb-4 mt-1">Sensor Registration</h4>
-                <hr> {% if displaytext %}
+                <hr> {% if displaytext == 'Error' %}
+                <p class="text-success text-center message-show-error">{{ displaytext }}</p>
+                {% elif displaytext == 'Sensor Registered' %}
                 <p class="text-success text-center message-show-sucess">{{ displaytext }}</p>
                 {% else %}
                 <p style="visibility:hidden;">text</p>
@@ -67,12 +69,12 @@
     </div>
 
     <script>
-            $('#inputfile').on('change',function(){
-                var fileName = $(this).val();
-                $(this).next('.custom-file-label').html(fileName);
-            })
+        $('#inputfile').on('change', function() {
+            var fileName = $(this).val();
+            $(this).next('.custom-file-label').html(fileName);
+        })
     </script>
-    
+
 </body>
 
 </html>
