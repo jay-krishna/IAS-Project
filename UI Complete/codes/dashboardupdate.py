@@ -1,8 +1,10 @@
 import requests
 import json
 
-def update():
-	r=requests.get("http://127.0.0.1:5056/req")
+def update(username):
+	params = dict()
+	params["username"] = username
+	r=requests.post("http://127.0.0.1:5056/req",json=params)
 	data=r.json()
 	send_data=[]
 	print(data)
