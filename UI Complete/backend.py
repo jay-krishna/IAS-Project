@@ -3,7 +3,7 @@ from flask import render_template
 import os
 import requests
 import json
-import mysql.connector
+# import mysql.connector
 import zipfile
 import shutil
 
@@ -198,8 +198,8 @@ def application():
 			somepayload["filename"] = filename[0]
 			req = requests.post(url="http://13.68.206.239:5056/processUpload",json=somepayload)
 			req = json.loads(req.text)
-			return jsonify(upload="success",validation="success")
-	return render_template('/application/application.html')
+			return jsonify(upload="success",validation="success",displaytext="Uploaded")
+	return render_template('/application/application.html',displaytext=None)
 
 @app.route("/query",methods=['GET','POST'])
 def query():

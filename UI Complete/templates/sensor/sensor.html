@@ -41,7 +41,7 @@
                 <hr> {% if displaytext %}
                 <p class="text-success text-center message-show-sucess">{{ displaytext }}</p>
                 {% else %}
-                <p class="text-success text-center message">text</p>
+                <p style="visibility:hidden;">text</p>
                 {% endif %}
                 <form action="{{ url_for('sensor') }}" method="post" enctype="multipart/form-data">
                     <div class="form-group">
@@ -54,8 +54,8 @@
                     </div>
                     <div class="form-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="" accept=".json" name="file">
-                            <label class="custom-file-label" for="customFile">Select file</label>
+                            <input type="file" class="custom-file-input" id="inputfile" accept=".json" name="file">
+                            <label class="custom-file-label" for="inputfile">Select file</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -65,6 +65,14 @@
             </article>
         </div>
     </div>
+
+    <script>
+            $('#inputfile').on('change',function(){
+                var fileName = $(this).val();
+                $(this).next('.custom-file-label').html(fileName);
+            })
+    </script>
+    
 </body>
 
 </html>
