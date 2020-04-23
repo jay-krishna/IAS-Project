@@ -13,7 +13,7 @@ sensorname = None
 logged_username=None
 identifier=None
 #change dest path
-dest = "/home/pratik/"
+dest = "/home/ias/"
 
 USER_TABLE_NAME = "user"
 UPLOADS_TABLE_NAME = "useruploadss"
