@@ -4,10 +4,15 @@ import json
 def update(username):
 	params = dict()
 	params["username"] = username
-	r=requests.post("http://127.0.0.1:5056/req",json=params)
+	r=requests.post("http://13.68.206.239:5056/req",json=params)
 	data=r.json()
+	data = json.loads(data)
 	send_data=[]
-	print(data)
+	print('dashboard 2 ',data)
+	print(len(data))
+	if len(data)==0:
+		temp = []
+		return temp
 	for app in data:
 		# print(app)
 		app_name=app["appname"]
