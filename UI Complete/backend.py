@@ -23,6 +23,7 @@ app = Flask(__name__)
 
 @app.route("/login",methods=['GET','POST'])
 def login():
+	global logged_username
 	if(request.method == 'POST'):
 		status=False
 		if("username" in request.form.keys() and "password" in request.form.keys()):
