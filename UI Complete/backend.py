@@ -23,7 +23,6 @@ app = Flask(__name__)
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-	global logged_username
 	if(request.method == 'POST'):
 		status=False
 		if("username" in request.form.keys() and "password" in request.form.keys()):
@@ -32,6 +31,7 @@ def login():
 			status=validate.auth(username,password)
 
 		if(status):
+			global logged_username
 			logged_username=username
 			return redirect('/dashboard')
 		else:
@@ -73,7 +73,7 @@ def dashboard():
 			params["username"] = logged_username
 			params["request"] = "Start"
 			params = json.dumps(params)
-			req = requests.post(url="http://127.0.0.1:5056/sendToScheduler",json=params)
+			req = requests.post(url="http://13.68.206.239:5056/sendToScheduler",json=params)
 		elif(action=="stop"):
 			print("stop service")
 			params = dict()
@@ -82,7 +82,7 @@ def dashboard():
 			params["username"] = logged_username
 			params["request"] = "Stop"
 			params = json.dumps(params)
-			req = requests.post(url="http://127.0.0.1:5056/sendToScheduler",json=params)
+			req = requests.post(url="http://13.68.206.239:5056/sendToScheduler",json=params)
 		else:
 			print("redirect")
 			return jsonify(url_for('output'))
@@ -196,7 +196,7 @@ def application():
 			somepayload["extractdest"] = extractdest
 			somepayload["username"] = username
 			somepayload["filename"] = filename[0]
-			req = requests.post(url="http://0.0.0.0:5056/processUpload",json=somepayload)
+			req = requests.post(url="http://13.68.206.239:5056/processUpload",json=somepayload)
 			req = json.loads(req.text)
 			return jsonify(upload="success",validation="success")
 	return render_template('/application/application.html')
