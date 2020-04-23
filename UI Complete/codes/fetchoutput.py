@@ -13,7 +13,7 @@ def output(thestring):
     payload["serviceid"] = thestring[2]
     
     payload = json.dumps(payload)
-    req =  requests.post(url="http://127.0.0.1:5056/outputlist",data=payload)
+    req =  requests.post(url="http://13.68.206.239:5056/outputlist",data=payload)
     resultlist = json.loads(req.text)
     resultlist = resultlist["output"]
     return resultlist
@@ -23,7 +23,7 @@ def clearBuffer(thestring):
     payload = dict()
     payload["opinfo"] = thestring
     payload = json.dumps(payload)
-    req =  requests.post(url="http://127.0.0.1:5056/clearoutput",data=payload)
+    req =  requests.post(url="http://13.68.206.239:5056/clearoutput",data=payload)
 
 # print(output("admin_Application-1_gatemonitor"))
 # time.sleep(10)
