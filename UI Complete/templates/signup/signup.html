@@ -23,7 +23,7 @@
                 {% if authcode %}
                     <p class="text-danger text-center">Invalid Request</p>
                 {% else %}
-                    <p class="text-success text-center message">text</p>
+                     <p style="visibility:hidden;">text</p>
                 {% endif %}
                 <form action="{{ url_for('signup') }}" method="post">
                     <div class="form-group">
@@ -50,7 +50,7 @@
                     <span class="bg-light">OR</span>
                 </p>
                 <p>
-                    <a href="" class="btn btn-block btn-info"> <i></i>Login</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-block btn-info"> <i></i>Login</a>
                 </p>
             </article>
         </div>
