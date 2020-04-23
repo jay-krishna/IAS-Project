@@ -87,7 +87,9 @@ def dashboard():
 			return jsonify(url_for('output'))
 
 		return jsonify(["ok"])
-	send_data=dashboardupdate.update()
+	global logged_username
+	username = logged_username
+	send_data=dashboardupdate.update(username)
 	return render_template('/dashboard/dashboard.html',data=send_data,length=len(send_data))
 
 @app.route("/output",methods=['GET','POST'])
