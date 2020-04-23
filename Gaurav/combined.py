@@ -30,10 +30,10 @@ Deployment - 5058
 
 app = Flask(__name__)
 api = Api(app)
-UPLOAD_FOLDER_APP = '/home/pratik/'
+UPLOAD_FOLDER_APP = '/home/ias/'
 ALLOWED_EXTENSIONS_ZIP = {'zip'}
 app.config['UPLOAD_FOLDER_APP'] = UPLOAD_FOLDER_APP
-UPLOAD_FOLDER_SENSOR = '/home/pratik/'
+UPLOAD_FOLDER_SENSOR = '/home/ias/'
 ALLOWED_EXTENSIONS_JSON = {'json'}  
 app.config['UPLOAD_FOLDER_SENSOR'] = UPLOAD_FOLDER_SENSOR
 
@@ -219,54 +219,44 @@ class request_manager_backend(Resource):
         cursor = mydb.cursor(buffered=True)
         query = "use "+DB_NAME
         cursor.execute(query)
-        authparams = request.get_json(force=True)
-        authparams["type"] = "validate"
-        global PROTO
-        URL_loc = PROTO + URL + ":" + str(PORT) + "/auth"
-        authparams = json.dumps(authparams)
-        req = requests.post(url=URL_loc,data=authparams)
-        req = json.loads(req.text)
-        if req["result"] == "success":
-            username = req["username"]
-            print("################## REQ MANAGER SENDING AN UPDATE  for "+username+" ####")
-            query = "select appname,serviceid,servicename,status,scheduled from "+UPLOADS_TABLE_NAME+" where username=\""+username+"\""
-            cursor.execute(query)
-            counter = 0
-            mainlist = list()
-            for x in cursor:
-                appname = x[0]
-                serviceid = x[1]
-                servicename = x[2]
-                status = x[3]
-                scheduled = x[4]
-                innerdict = dict()
-                innerdict["serviceid"]= serviceid
-                innerdict["servicename"]=servicename
-                innerdict["status"]=status
-                innerdict["scheduled"] = scheduled
-                maindict = dict()
-                found = False
-                for i in mainlist:
-                    if i["appname"]==appname:
-                        found = True
-                        maindict = i
-                if found == True:
-                    maindict["data"].append(innerdict)
-                else:
-                    maindict["data"] = list()
-                    maindict["data"].append(innerdict)
-                    maindict["appname"] = appname
-                    mainlist.append(maindict)
-            response = json.dumps(mainlist)
-            cursor.close()
-            mydb.commit()
-            mydb.close()
-            print("################## REQ MANAGER SENDING AN UPDATE for "+username+" ENDS HERE ########")
-            return response
+        params = request.get_json(force=True)
+        username = params["username"]
+        print("################## REQ MANAGER SENDING AN UPDATE  for "+username+" ####")
+        query = "select appname,serviceid,servicename,status,scheduled from "+UPLOADS_TABLE_NAME+" where username=\""+username+"\""
+        cursor.execute(query)
+        counter = 0
+        mainlist = list()
+        for x in cursor:
+            appname = x[0]
+            serviceid = x[1]
+            servicename = x[2]
+            status = x[3]
+            scheduled = x[4]
+            innerdict = dict()
+            innerdict["serviceid"]= serviceid
+            innerdict["servicename"]=servicename
+            innerdict["status"]=status
+            innerdict["scheduled"] = scheduled
+            maindict = dict()
+            found = False
+            for i in mainlist:
+                if i["appname"]==appname:
+                    found = True
+                    maindict = i
+            if found == True:
+                maindict["data"].append(innerdict)
+            else:
+                maindict["data"] = list()
+                maindict["data"].append(innerdict)
+                maindict["appname"] = appname
+                mainlist.append(maindict)
+        response = json.dumps(mainlist)
         cursor.close()
         mydb.commit()
         mydb.close()
-        return
+        print("################## REQ MANAGER SENDING AN UPDATE for "+username+" ENDS HERE ########")
+        return response
+
 
 
 def allowed_file(filename):
