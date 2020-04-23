@@ -88,7 +88,6 @@ def dashboard():
 			return jsonify(url_for('output'))
 
 		return jsonify(["ok"])
-	global logged_username
 	username = logged_username
 	send_data=dashboardupdate.update(username)
 	return render_template('/dashboard/dashboard.html',data=send_data,length=len(send_data))
@@ -221,4 +220,4 @@ def query():
 
 
 if __name__ == "__main__":
-    app.run(debug=True,port=6060) 
+    app.run(host="0.0.0.0",port=5057) 
