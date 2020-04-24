@@ -47,11 +47,11 @@ class Scheduler:
 
     def send_request_to_service_life_cyle(self,username,application_id,service_name,service_instance_id,type_):
         response = {"username":username,"applicationname":application_id,"servicename":service_name,"serviceId":self.main_service_id_dict[service_instance_id]}
-        # print(response)
-        # if type_=="start":
-        #     res = requests.post('http://'+service_life_cycle_ip+':'+str(service_life_cycle_port)+'/servicelcm/service/start', json=response)
-        # else:
-        #     res = requests.post('http://'+service_life_cycle_ip+':'+str(service_life_cycle_port)+'/servicelcm/service/stop', json=response)
+        print(response)
+        if type_=="start":
+            res = requests.post('http://'+service_life_cycle_ip+':'+str(service_life_cycle_port)+'/servicelcm/service/start', json=response)
+        else:
+            res = requests.post('http://'+service_life_cycle_ip+':'+str(service_life_cycle_port)+'/servicelcm/service/stop', json=response)
         
     def run(self):
         t1 = threading.Thread(target=self.pending_jobs) 
@@ -326,17 +326,22 @@ def schedule_service():
     content = request.get_json()
     
     res = "OK"
+    print(content)
+    print(type(content))
     if(content["action"]=="Stop"):
         id_ = content["config"]["Application"]["username"]+"_"+content["config"]["Application"]["applicationname"]+"_"+content["config"]["Application"]["services"][content["servicename"]]["servicename"]
 
         response = {"username":content["config"]["Application"]["username"],"applicationname":content["config"]["Application"]["applicationname"],"servicename":content["config"]["Application"]["services"][content["servicename"]]["servicename"],"serviceId":id_}
+
+        print(response)
+        print(type(response))
         service_instance_id = sch.main_id_sch_id[id_]
 
         del sch.started[service_instance_id]
         
         schedule.cancel_job(sch.job_dict[service_instance_id])
         
-        # res = requests.post('http://'+service_life_cycle_ip+':'+str(service_life_cycle_port)+'/servicelcm/service/stop', json=response)
+        res = requests.post('http://'+service_life_cycle_ip+':'+str(service_life_cycle_port)+'/servicelcm/service/stop', json=response)
         print("+MSG TO SLCM TO STOP ",id_)
 
     else:
@@ -378,7 +383,7 @@ def dumping_thread():
                     # "main_service_id_dict":self.main_service_id_dict
                     }
            
-            pickle_out = open("sch_data.pickle","wb")
+            pickle_out = open("/home/sch_data.pickle","wb")
             pickle.dump(data, pickle_out)
             pickle_out.close() 
            
@@ -412,7 +417,7 @@ if __name__ == "__main__":
 
     try:
 
-        dbfile = open("sch_data.pickle","rb")
+        dbfile = open("/home/sch_data.pickle","rb")
         db = pickle.load(dbfile)
 
         schedules_ = db["schedules"]
