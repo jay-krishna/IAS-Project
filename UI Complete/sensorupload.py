@@ -13,7 +13,7 @@ sensorname = None
 logged_username = None
 identifier = None
 #change dest path
-dest = "/home/ias/"
+dest = "/home/"
 
 USER_TABLE_NAME = "user"
 UPLOADS_TABLE_NAME = "useruploadss"
@@ -153,7 +153,7 @@ def sensor():
     return render_template('/sensor/sensor.html', displaytext=None)
 
 
-UPLOAD_FOLDER_APP = '/home/ias/'
+UPLOAD_FOLDER_APP = '/home/'
 ALLOWED_EXTENSIONS_ZIP = {'zip'}
 
 
@@ -219,7 +219,7 @@ def application():
             req = requests.post(
                 url="http://13.68.206.239:5056/processUpload",
                 json=somepayload)
-            req = json.loads(req.text)
+            # req = json.loads(req.text)
             return render_template(
                 '/application/application.html', displaytext="Successful")
     return render_template('/application/application.html', displaytext=None)
