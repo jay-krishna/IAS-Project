@@ -76,9 +76,16 @@
                             <button type="button" type="button" class="btn btn-success" style="width:50%;" name="start" value="{{ _[5] }}">Start</button>
                         </td>
                         {% endif %}
+                        
+                        {% if _[2]=='Running' %}
                         <td class="text-center">
                             <button type="button" type="button" class="btn btn-info" style="width:50%;" name="output" value="{{ _[5] }}">Output</button>
                         </td>
+                        {% else %}
+                        <td class="text-center">
+                            <button type="button" type="button" class="btn btn-info" style="width:50%;" name="output" value="{{ _[5] }}"; disabled>Output</button>
+                        </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
             </tbody>
