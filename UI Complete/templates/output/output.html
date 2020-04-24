@@ -17,7 +17,7 @@
     <script type="text/JavaScript">
 
         $(document).ready(function() { setInterval(function(){ $.ajax({ url:"{{ url_for('output') }}", dataType: 'json', data:{required:'send'}, type:'POST', success: function(data){ var i=0; for(i=0;i
-        <data.length;++i){ $( "#datatable").append( '<tr><td class="text-center">'+data[i]+ '</td></tr>'); } } }); },2000); $( "#clear").click(function(){ $.ajax({ url: "{{ url_for('output') }}", dataType: 'json', data:{required: 'clear'}, type: 'POST', success: function(data){ window.location=d ata; } }); }); }); </script>
+        <data.length;++i){ $( "#datatable").append( '<tr><td class="text-center">'+data[i]+ '</td></tr>'); } } }); },2000); $( "#clear").click(function(){ $.ajax({ url: "{{ url_for('output') }}", dataType: 'json', data:{required: 'clear'}, type: 'POST', success: function(data){ window.location=data; } }); }); }); </script>
 </head>
 
 <body class="body-inside">
