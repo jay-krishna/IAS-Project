@@ -3,14 +3,15 @@ from flask import render_template
 import os
 import requests
 import json
-import mysql.connector
+# import mysql.connector
 import zipfile
 import shutil
 
-from codes import twowaysensor, dashboardupdate, validate, fetchoutput
+from codes import twowaysensor, dashboardupdate, validate, fetchoutput,configedit
 
 sensorname = None
 logged_username = None
+logged_username="pratik"
 identifier = None
 #change dest path
 dest = "/home/"
@@ -252,6 +253,18 @@ def query():
     return render_template(
         '/query/query.html', user=None, sensors=None, displaytext=None)
 
+@app.route("/config",methods=['GET','POST'])
+def config():
+    if(request.method == 'POST'):
+        if("action" in request.form.keys() and request.form["action"]=="givelocation"):
+            locations=configedit.FetchSensorLocations(logged_username,request.form["value"])
+            return jsonify({"data":locations})
+        else:
+            print(request.form)
+    names=configedit.FetchServices(logged_username)
+    sensortypes=configedit.FetchSensorTypes(logged_username)
+    return render_template("/configedit/configedit.html",services=names,sensortypes=sensortypes,locations=None)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5057)
+    # app.run(host="0.0.0.0", port=5057)
+    app.run(debug=True, port=5057)
