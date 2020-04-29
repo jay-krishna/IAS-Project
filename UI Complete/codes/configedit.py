@@ -9,14 +9,14 @@ def FetchServices(username):
 def FetchSensorTypes(username):
 	d = {'username':username}
 	r=requests.post(url="http://127.0.0.1:5051/getsensordata",json=d)
-	data=r.json()["data"]
+	data=r.json()
 
 	return list(data.keys())
 
 def FetchSensorLocations(username,loc):
 	d = {'username':username}
 	r=requests.post(url="http://127.0.0.1:5051/getsensordata",json=d)
-	data=r.json()["data"][loc]
+	data=r.json()[loc]
 	send=[]
 	for _ in data:
 		send.append(_["area"]+"_"+_["building"]+"_"+_["room_no"])
