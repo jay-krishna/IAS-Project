@@ -266,5 +266,5 @@ def config():
     return render_template("/configedit/configedit.html",services=names,sensortypes=sensortypes,locations=None)
 
 if __name__ == "__main__":
-    # app.run(host="0.0.0.0", port=5057)
-    app.run(debug=True, port=5057)
+    app.run(host="0.0.0.0", port=5057)
+    # app.run(debug=True, port=5057)
