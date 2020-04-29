@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-    <title>Sign Up</title>
+    <title>Admin Login</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/common.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/icon type">
 </head>
@@ -18,13 +18,13 @@
     <div class="card login-form">
         <div class="card">
             <article class="card-body">
-                <h4 class="card-title text-center mb-4 mt-1">Sign Up</h4>
+                <h4 class="card-title text-center mb-4 mt-1">Admin Login</h4>
                 <hr> {% if authcode %}
-                <p class="text-danger text-center">Invalid Request</p>
+                <p class="text-danger text-center">Invalid Credentials</p>
                 {% else %}
                 <p style="visibility:hidden;">text</p>
                 {% endif %}
-                <form action="{{ url_for('signup') }}" method="post">
+                <form action="{{ url_for('admin') }}" method="post">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -38,21 +38,21 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                             </div>
-                            <input name="password" class="form-control" placeholder="******" type="password">
+                            <input class="form-control" name="password" placeholder="******" type="password">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Sign Up </button>
+                        <button type="submit" class="btn btn-primary btn-block"> Login </button>
                     </div>
                 </form>
                 <p class="divider-text">
                     <span class="bg-light">OR</span>
                 </p>
                 <p>
-                    <a href="{{ url_for('login') }}" class="btn btn-block btn-info"> <i></i>Login</a>
+                    <a href="{{ url_for('signup') }}" class="btn btn-block btn-info"> <i></i>Sign Up</a>
                 </p>
                 <p>
-                    <a href="{{ url_for('admin') }}" class="btn btn-block btn-info"> <i></i>Admin Login</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-block btn-info"> <i></i>User Login</a>
                 </p>
             </article>
         </div>

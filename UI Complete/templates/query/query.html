@@ -15,6 +15,21 @@
 </head>
 
 <body class="body-inside">
+    {% if username == 'admin' %}
+    <div id="ias">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="{{ url_for('sensor') }}">Sensor Registration</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" href="{{ url_for('query') }}">Sensor Query</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="{{ url_for('admin') }}">Logout</a>
+            </li>
+        </ul>
+    </div>
+    {% else %}
     <div id="ias">
         <ul class="nav nav-tabs nav-justified">
             <li class="nav-item" role="presentation">
@@ -24,7 +39,7 @@
                 <a class="nav-link" href="{{ url_for('application') }}">Application Upload</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" href="{{ url_for('sensor') }}">Sensor Registration</a>
+                <a class="nav-link" href="{{ url_for('config') }}">Application Upload</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" href="{{ url_for('query') }}">Sensor Query</a>
@@ -34,6 +49,7 @@
             </li>
         </ul>
     </div>
+    {% endif %}
 
     <div class="card upload-form-query-left">
         <div class="card">
