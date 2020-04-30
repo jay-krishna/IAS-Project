@@ -280,8 +280,22 @@ def config():
 			locations=configedit.FetchSensorLocations(logged_username,request.form["value"])
 			return jsonify({"data":locations})
 		else:
+			print(type(request.form))
 			print(request.form)
-			print(request.form.to_dict(flat=False))
+			temp = request.form.to_dict(flat=False)
+			converted = dict()
+			for k in temp:
+				if len(temp[k]) > 1:
+					converted[k] = temp[k]
+				else:
+					thelist = temp[k]
+					converted[k] = thelist[0]
+			converted["username"] = logged_username
+			print(converted)
+			req = requests.post(
+				url="http://13.68.206.239:5056/configEditReq",
+				json=converted)
+>>>>>>> f315159be5c9cfff9ba9d1b69dd2ee7d5d3967de
 			names=configedit.FetchServices(logged_username)
 			sensortypes=configedit.FetchSensorTypes(logged_username)
 			return render_template("/configedit/configedit.html",services=names,sensortypes=sensortypes,locations=None,displaytext="Successful")

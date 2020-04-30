@@ -2,8 +2,14 @@ import requests
 import json
 
 def FetchServices(username):
-	services=["Application-1_Service-1","Application-1_Service-2","Application-2_Service-1","Application-2_Service-2"]
-
+	params = dict()
+	params["username"] = username
+	req = requests.post(
+				url="http://13.68.206.239:5056/getServiceList",
+				json=params)
+	response = req.json()
+	services=response["services"]
+	print("Received services = ",services)
 	return services
 
 def FetchSensorTypes(username):

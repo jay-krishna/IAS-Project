@@ -314,7 +314,7 @@ def validate(path,username,appname):
         # print(foldername)
         files = os.listdir(name)
         # print(files)
-        for filenames in files:
+        #for filenames in files:
             # print(filenames)
     kafka_topics = []
     '''
@@ -540,6 +540,190 @@ class clearoutput(Resource):
         topicname = username+"_"+appname+"_"+servicename
         kafkaDict[topicname] = list()
 
+class configedit(Resource):
+    def get(self):
+        return
+    def post(self):
+        print("rec req for edit config")
+        recvd_params = request.get_json(force=True)
+        username = recvd_params["username"]
+        concat = recvd_params["service"]
+        concat = concat.split("_")
+        appname = concat[0]
+        servicename = concat[1]
+        start = recvd_params["starttime"]
+        end = recvd_params["endtime"]
+        day = recvd_params["day"]
+        sensortype = recvd_params["sensortype"]
+        location = recvd_params["location"]
+        datarate = recvd_params["datarate"]
+        action = recvd_params["action"]
+        #create config
+        config_file_path = app.config['UPLOAD_FOLDER_APP'] + username+"/"+appname+"/"+"config.json"
+        print("Config file path = "+config_file_path)
+        file_json = open(config_file_path,"r")
+        config_data=json.load(file_json)
+        file_json.close()
+        serviceids = []
+        serviceid = None
+        for obj in config_data["Application"]["services"]:
+            serviceids.append(obj)
+            if config_data["Application"]["services"][obj]["servicename"] == servicename:
+                serviceid = obj
+                print("Service id set "+obj)
+        maximum = -1
+        for i in serviceids:
+            temp = i.split("-")
+            numb = temp[1]
+            numb = int(numb)
+            if numb > maximum:
+                maximum = numb
+        newnumber = maximum+1
+        newnumber = str(newnumber)
+        print("Maximum number is "+newnumber)
+        newservicename= "service-"+newnumber
+        print("new servicename "+newservicename)
+        src = app.config['UPLOAD_FOLDER_APP'] + username+"/"+appname+"/"+servicename+"/"
+        dst = app.config['UPLOAD_FOLDER_APP'] + username+"/"+appname+"/"+newservicename+"/"
+        shutil.copytree(src, dst)
+        copyofconfig = config_data["Application"]["services"][serviceid]
+        copyofconfig["servicename"] = newservicename
+        temp1 = []
+        temp1.append(start)
+        copyofconfig["time"]["start"] = temp1
+        temp2 = []
+        temp2.append(end)
+        copyofconfig["time"]["end"] = temp2
+        temp3 = []
+        temp3.append(day.capitalize())
+        copyofconfig["days"] =temp3
+        counter = 1
+        maindict = dict()
+        for i in location:
+            add = i.split("_")
+            area = add[0]
+            building = add[1]
+            room_no = add[2]
+            sensorid = "sensor"+str(counter)
+            counter = counter+1
+            geoloc = dict()
+            geoloc["lat"] = "None"
+            geoloc["long"] = "None"
+            address = dict()
+            address["area"] = area
+            address["building"] = building
+            address["room_no"] = room_no
+            proc = dict()
+            proc["data_rate"] = datarate
+            innerdict = dict()
+            innerdict["sensor_name"] = sensortype
+            innerdict["sensor_geolocation"] = geoloc
+            innerdict["sensor_address"] = address
+            innerdict["processing"] = proc
+            maindict[sensorid]=innerdict
+        copyofconfig["sensor"] = maindict
+        act = dict()
+        t1 = dict()
+        t1["value"] = "None"
+        act["Output_display_to_user"] = False
+        t3 = dict()
+        t3["message"] = "None"
+        t3["number"] = "None"
+        t4 = dict()
+        t4["To"] = "None"
+        t4["From"] = "iastiwari@gmail.com"
+        t4["Subject"] = "None"
+        t4["Text"] = "None"
+        if action == "displaytoadmin":
+            act["Output_display_to_user"] = True
+        elif action == "controlsensor":
+            t1["value"] = "None"
+        elif action == "email":
+            t4["To"] = recvd_params["email-to"]
+            t4["From"] = "None"
+            t4["Subject"] = recvd_params["email-subject"]
+            t4["Text"] = "None"
+        elif action=="sms":
+            t3["message"] = recvd_params["sms-subject"]
+            t3["number"] = recvd_params["sms-number"]
+        act["send_output_to_sensor"] = t1
+        act["Send_SMS"] = t3
+        act["Send_Email"] = t4
+        copyofconfig["action"] = act
+        print("$$$$$$$$$$$$$$$$$")
+        print("new copy of config is ")
+        print(copyofconfig)
+        config_data["Application"]["services"][newservicename] = copyofconfig
+
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        print("New config is ")
+        print(config_data)
+        file_json = open(config_file_path,"w")
+        file_json.write(json.dumps(config_data,indent=4,sort_keys=True))
+        file_json.close()
+        #file written
+        all_services_dict = config_data["Application"]["services"].copy()
+        print("$$$$$$$$$$$$$$")
+        print(all_services_dict)
+        keysList = all_services_dict.keys()
+        keysList = list(keysList)
+        print("-----------------------------------------")
+        print(keysList)
+        for tserviceid in keysList:
+            if tserviceid != newservicename:
+                del all_services_dict[tserviceid]
+        mydb = mysql.connector.connect(host="localhost",user="admindb",passwd="password")
+        cursor = mydb.cursor(buffered=True)
+        query = "use "+DB_NAME
+        cursor.execute(query)
+        scheduled = config_data["Application"]["services"][serviceid]["scheduled"]
+        if scheduled == "True":
+            config_data["Application"]["services"] = all_services_dict
+            print("Sending to Jay")
+            print(config_data)
+            response = dict()
+            response["servicename"] = ""
+            response["config"] = config_data
+            response["action"] = ""
+            req = requests.post(url="http://13.68.206.239:5053/schedule_service",json=response)
+            query = "insert into "+UPLOADS_TABLE_NAME+" values(\""+username+"\",\""+appname+"\",\""+newservicename+"\",\""+newservicename+"\",\"Processing\",\""+scheduled+"\")"
+            print(query)
+            cursor.execute(query)
+        else:
+            print("Not scheduled. Normal update")
+            query = "insert into "+UPLOADS_TABLE_NAME+" values(\""+username+"\",\""+appname+"\",\""+newservicename+"\",\""+newservicename+"\",\"Stopped\",\""+scheduled+"\")"
+            print(query)
+            cursor.execute(query)
+        cursor.close()
+        mydb.commit()
+        mydb.close()
+        print("Config update Success")
+        return
+
+
+class config_edit_resp(Resource):
+    def get(self):
+        return
+    def post(self):
+        recvd_params = request.get_json(force=True)
+        username = recvd_params["username"]
+        mydb = mysql.connector.connect(host="localhost",user="admindb",passwd="password")
+        cursor = mydb.cursor(buffered=True)
+        query = "use "+DB_NAME
+        cursor.execute(query)
+        #(username varchar(30), appname varchar(30), serviceid varchar(30),servicename varchar(50), 
+        # status varchar(20), scheduled varchar(20))
+        query = "select appname,servicename from "+UPLOADS_TABLE_NAME+" where username=\""+username+"\""
+        cursor.execute(query)
+        values = []
+        for x in cursor:
+            appname = x[0]
+            servicename = x[1]
+            concat = appname+"_"+servicename
+            values.append(concat)
+        values = sorted(values)
+        return jsonify(services=values)
+
 api.add_resource(login,'/authlogin')
 api.add_resource(signup,'/authsignup')
 api.add_resource(authorize,'/auth')
@@ -548,6 +732,8 @@ api.add_resource(output,'/outputlist')
 api.add_resource(sendToScheduler,'/sendToScheduler')
 api.add_resource(clearoutput,'/clearoutput')
 api.add_resource(processUpload,'/processUpload')
+api.add_resource(configedit,'/configEditReq')
+api.add_resource(config_edit_resp,'/getServiceList')
 
 def Updater():
     print("Updater thread started")
@@ -570,6 +756,7 @@ def Updater():
                 resp = requests.get(requrl)
             except requests.exceptions.Timeout:
                 # Maybe set up for a retry, or continue in a retry loop
+                time.sleep(30)
                 continue
             #resp = requests.get(requrl)       
             # print(resp.text)
