@@ -114,6 +114,7 @@
     <script>
         $(document).ready(function() { 
             $( "#sensortype" ).change(function() {
+                $("#location").empty();
                 value=$(this).val();
                 $.ajax({
                     data:{ 'action':'givelocation', 'value':value },

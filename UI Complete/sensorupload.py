@@ -281,7 +281,7 @@ def config():
 			return jsonify({"data":locations})
 		else:
 			print(request.form)
-			print(request.form["location"])
+			print(request.form.to_dict(flat=False))
 			names=configedit.FetchServices(logged_username)
 			sensortypes=configedit.FetchSensorTypes(logged_username)
 			return render_template("/configedit/configedit.html",services=names,sensortypes=sensortypes,locations=None,displaytext="Successful")
