@@ -295,7 +295,6 @@ def config():
 			req = requests.post(
 				url="http://13.68.206.239:5056/configEditReq",
 				json=converted)
->>>>>>> f315159be5c9cfff9ba9d1b69dd2ee7d5d3967de
 			names=configedit.FetchServices(logged_username)
 			sensortypes=configedit.FetchSensorTypes(logged_username)
 			return render_template("/configedit/configedit.html",services=names,sensortypes=sensortypes,locations=None,displaytext="Successful")
