@@ -586,7 +586,7 @@ class configedit(Resource):
         src = app.config['UPLOAD_FOLDER_APP'] + username+"/"+appname+"/"+servicename+"/"
         dst = app.config['UPLOAD_FOLDER_APP'] + username+"/"+appname+"/"+newservicename+"/"
         shutil.copytree(src, dst)
-        copyofconfig = config_data["Application"]["services"][serviceid]
+        copyofconfig = config_data["Application"]["services"][serviceid].copy()
         copyofconfig["servicename"] = newservicename
         temp1 = []
         temp1.append(start)
@@ -595,7 +595,7 @@ class configedit(Resource):
         temp2.append(end)
         copyofconfig["time"]["end"] = temp2
         temp3 = []
-        temp3.append(day.capitalize())
+        temp3.append(day)
         copyofconfig["days"] =temp3
         counter = 1
         maindict = dict()
@@ -640,7 +640,7 @@ class configedit(Resource):
             t1["value"] = "None"
         elif action == "email":
             t4["To"] = recvd_params["email-to"]
-            t4["From"] = "None"
+            t4["From"] = "iastiwari@gmail.com"
             t4["Subject"] = recvd_params["email-subject"]
             t4["Text"] = "None"
         elif action=="sms":
@@ -694,6 +694,12 @@ class configedit(Resource):
             query = "insert into "+UPLOADS_TABLE_NAME+" values(\""+username+"\",\""+appname+"\",\""+newservicename+"\",\""+newservicename+"\",\"Stopped\",\""+scheduled+"\")"
             print(query)
             cursor.execute(query)
+        print("Starting kafka thread")
+        a_topic = username+"_"+appname+"_"+newservicename
+        global kafkaDict
+        kafkaDict[a_topic] = []
+        t1 = threading.Thread(target=kafkaThread,args=(a_topic,))
+        t1.start()
         cursor.close()
         mydb.commit()
         mydb.close()
