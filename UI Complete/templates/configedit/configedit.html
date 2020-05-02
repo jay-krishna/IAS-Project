@@ -36,7 +36,7 @@
     </div>
 
     <div class="card upload-form-config" id="configform">
-        <div class="card">
+        <div class="card" id="configforminner">
             <article class="card-body">
                 <h4 class="card-title text-center mb-4 mt-1">Config Edit</h4>
                 <hr>{% if displaytext == 'Error' %}
@@ -49,11 +49,30 @@
                 <form action="{{ url_for('config') }}" method="post">
                     <div class="form-group">
                         <label>Select Service</label>
-                        <select class="form-control" name="service">
+                        <select class="form-control" name="service" id="service">
                             {% for service in services %}
                             <option value="{{service}}">{{service}}</option> {% endfor %}
                         </select>
                     </div>
+                    
+
+                    <div class="form-group">
+                        <label>Dependencies</label><br/>
+                        <label class="control-label">
+                            <input id="nodependent" name="dependent" type="radio" value="No" checked> No
+                        </label><br/>
+                        <label class="control-label">
+                            <input id="yesdependent" name="dependent" type="radio" value="Yes"> Yes
+                        </label>
+                    </div>
+
+                    <div id="dependcycount">
+
+                    </div>
+                    <div id="dependcylist">
+
+                    </div>
+
                     <div class="form-group">
                             <label>Select Start Time</label>
                             <input name="starttime" class="form-control" type="time">
@@ -61,6 +80,15 @@
                     <div class="form-group">
                             <label>Select End Time</label>
                             <input name="endtime" class="form-control" type="time">
+                    </div>
+                    <div class="form-group">
+                        <label>Select Service Type</label><br/>
+                        <label class="control-label">
+                            <input name="schtype" type="radio" value="True"> Scheduled
+                        </label><br/>
+                        <label class="control-label">
+                            <input name="schtype" type="radio" value="False"> Non-Scheduled
+                        </label>
                     </div>
                     <div class="form-group">
                         <label>Select Days</label>
@@ -112,7 +140,8 @@
     </div>
 
     <script>
-        $(document).ready(function() { 
+        $(document).ready(function() {
+            // AdjustHeight();
             $( "#sensortype" ).change(function() {
                 $("#location").empty();
                 value=$(this).val();
@@ -139,23 +168,108 @@
                     $("#actionspecify").append(
                         "<label>To</label><input name='email-to' class='form-control' type='text'><label>Subject</label><input name='email-subject' class='form-control' type='text'>"
                     );
-                    $("#configform").addClass("upload-form-config-big");
-                    $("#configform").removeClass("upload-form-config");
+                    // $("#configform").addClass("upload-form-config-big");
+                    // $("#configform").removeClass("upload-form-config");
                 }
                 else if(value=="sms"){
                     $("#actionspecify").empty();
                     $("#actionspecify").append(
                         "<label>Number</label><input name='sms-number' class='form-control' type='number'><label>Message</label><input name='sms-subject' class='form-control' type='text'>"
                     );
-                    $("#configform").addClass("upload-form-config-big");
-                    $("#configform").removeClass("upload-form-config");
+                    // $("#configform").addClass("upload-form-config-big");
+                    // $("#configform").removeClass("upload-form-config");
                 }
                 else{
                     $("#actionspecify").empty();
-                    $("#configform").removeClass("upload-form-config-big");
-                    $("#configform").addClass("upload-form-config");
+                    // $("#configform").removeClass("upload-form-config-big");
+                    // $("#configform").addClass("upload-form-config");
+                }
+                AdjustHeight();
+            });
+
+            $("#service").change(function(){
+                $("#nodependent").prop("checked", true).change();
+            });
+
+            $("input[name=dependent][type=radio]").change(function(){
+                if($(this).val()=="Yes"){
+                    value=$("#service").val();
+                    // console.log(value);
+                    $.ajax({
+                    data:{ 'action':'givecount', 'value':value },
+                    type : 'POST',
+                    url : "{{ url_for('config') }}",
+                    dataType: 'json',
+                    success: function(data){
+                        var values=data["count"];
+                        var i=0;
+                        $("#dependcycount").append('<div class="form-group"><label>Select Number of dependencies</label><select class="form-control" name="numdependency" id="numdependency"></select></div">');
+                        for(i=0;i<values-1;++i){
+                            $("#numdependency").append($('<option>',{value:i+1,text:i+1}));
+                        }
+                        PutDependencyList();
+                    },
+                    complete:function(){
+                        AdjustHeight();
+                    }});
+                }
+                else{
+                    $("#dependcycount").empty();
+                    $("#dependcylist").empty();
+                    AdjustHeight();
                 }
             });
+
+            $("#dependcycount").on("click","#numdependency",function(){
+                PutDependencyList();
+            });
+
+            function PutDependencyList(){
+                $("#dependcylist").empty();
+                value=$("#service").val();
+
+                $.ajax({
+                    data:{ 'action':'givedependency', 'value':value },
+                    type : 'POST',
+                    url : "{{ url_for('config') }}",
+                    dataType: 'json',
+                    success: function(data){
+                        var services=data["dependencies"];
+                        count=$("#numdependency").val();
+                        $("#dependcylist").append('<p> Select Dependencies</p>');
+
+                        var i=0;
+                        for(i=0;i<count;++i){
+                            $("#dependcylist").append('<div class="form-group"><label>Dependency '+(i+1).toString()+'</label><select class="form-control" name=dependcy'+(i+1).toString()+' id=dependency'+(i+1).toString()+'></select>');
+                            
+                            var j;
+                            for(j=0;j<services.length;++j){
+                                $("#dependency"+(i+1).toString()).append($('<option>',{value:services[j],text:services[j]}));
+                            }
+
+                            $("#dependcylist").append("</div>");
+                        }
+
+                    },
+                    complete:function(){
+                        AdjustHeight();
+                    } });
+
+            }
+
+            function AdjustHeight(){
+                // console.log($("#configform").css("height"));
+                // console.log($("#configform").innerHeight());
+                // console.log($("#configform").height());
+                // console.log($("#configforminner").css("height"));
+                // console.log($("#configforminner").innerHeight());
+                // console.log($("#configforminner").height());
+
+                var x=document.getElementsByClassName('upload-form-config');
+                var y=$("#configforminner").height()+10;
+                // console.log(y);
+                x[0].style.height = y.toString()+"px";
+            }
         });
     </script>
 

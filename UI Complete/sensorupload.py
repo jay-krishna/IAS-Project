@@ -279,9 +279,15 @@ def config():
 		if("action" in request.form.keys() and request.form["action"]=="givelocation"):
 			locations=configedit.FetchSensorLocations(logged_username,request.form["value"])
 			return jsonify({"data":locations})
+		elif("action" in request.form.keys() and request.form["action"]=="givecount"):
+			count=configedit.FetchServiceCount(logged_username,request.form["value"])
+			return jsonify({"count":count})
+		elif("action" in request.form.keys() and request.form["action"]=="givedependency"):
+			dependencies=configedit.FetchServiceByApplication(logged_username,request.form["value"])
+			return jsonify({"dependencies":dependencies})
 		else:
-			print(type(request.form))
-			print(request.form)
+			# print(type(request.form))
+			# print(request.form)
 			temp = request.form.to_dict(flat=False)
 			converted = dict()
 			for k in temp:
