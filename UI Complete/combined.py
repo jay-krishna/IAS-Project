@@ -338,7 +338,7 @@ def validate(path,username,appname):
         kafka_topics.append(a_topic)
         status = "Stopped"
         if scheduled == "True":
-            status = "Running"
+            status = "Processing"
         query = "insert into "+UPLOADS_TABLE_NAME+" values(\""+username+"\",\""+appname+"\",\""+serviceid+"\",\""+servicename+"\",\""+status+"\",\""+scheduled+"\")"
         cursor.execute(query)
 
@@ -554,10 +554,12 @@ class configedit(Resource):
         start = recvd_params["starttime"]
         end = recvd_params["endtime"]
         day = recvd_params["day"]
+        rec_scheduled = recvd_params["schtype"] 
         sensortype = recvd_params["sensortype"]
         location = recvd_params["location"]
         datarate = recvd_params["datarate"]
         action = recvd_params["action"]
+
         #create config
         config_file_path = app.config['UPLOAD_FOLDER_APP'] + username+"/"+appname+"/"+"config.json"
         print("Config file path = "+config_file_path)
@@ -650,9 +652,25 @@ class configedit(Resource):
         act["Send_SMS"] = t3
         act["Send_Email"] = t4
         copyofconfig["action"] = act
+        copyofconfig["scheduled"] = rec_scheduled
+        #Handle the dependency part here 
+        isdependency = recvd_params["dependent"]
+        if isdependency == "Yes":
+            number_of_dependencies = recvd_params["numdependency"]
+            deplist = list()
+            number_of_dependencies = number_of_dependencies + 1
+            for i in range(1,number_of_dependencies):
+                keyname = "dependcy"+str(i)
+                tsername = recvd_params[keyname]
+                tsername = tsername.split("_")
+                tsername = tsername[1]
+                deplist.append(tsername)
+            copyofconfig["dependency"] = deplist
         print("$$$$$$$$$$$$$$$$$")
         print("new copy of config is ")
         print(copyofconfig)
+
+        #writing the changes here
         config_data["Application"]["services"][newservicename] = copyofconfig
 
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
@@ -719,16 +737,36 @@ class config_edit_resp(Resource):
         cursor.execute(query)
         #(username varchar(30), appname varchar(30), serviceid varchar(30),servicename varchar(50), 
         # status varchar(20), scheduled varchar(20))
-        query = "select appname,servicename from "+UPLOADS_TABLE_NAME+" where username=\""+username+"\""
-        cursor.execute(query)
-        values = []
-        for x in cursor:
-            appname = x[0]
-            servicename = x[1]
-            concat = appname+"_"+servicename
-            values.append(concat)
-        values = sorted(values)
-        return jsonify(services=values)
+        appreqst = recvd_params["app"]
+        if appreqst == True:
+            appname = recvd_params["appname"]
+            query = "select appname,servicename from "+UPLOADS_TABLE_NAME+" where username=\""+username+"\" AND appname=\""+appname+"\""
+            cursor.execute(query)
+            values = []
+            for x in cursor:
+                appname = x[0]
+                servicename = x[1]
+                concat = appname+"_"+servicename
+                values.append(concat)
+            values = sorted(values)
+            cursor.close()
+            mydb.commit()
+            mydb.close()
+            return jsonify(services=values)
+        else:
+            query = "select appname,servicename from "+UPLOADS_TABLE_NAME+" where username=\""+username+"\""
+            cursor.execute(query)
+            values = []
+            for x in cursor:
+                appname = x[0]
+                servicename = x[1]
+                concat = appname+"_"+servicename
+                values.append(concat)
+            values = sorted(values)
+            cursor.close()
+            mydb.commit()
+            mydb.close()
+            return jsonify(services=values)
 
 api.add_resource(login,'/authlogin')
 api.add_resource(signup,'/authsignup')
