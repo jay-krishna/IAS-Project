@@ -201,6 +201,8 @@
                     url : "{{ url_for('config') }}",
                     dataType: 'json',
                     success: function(data){
+                        // console.log("Count")
+                        // console.log(data)
                         var values=data["count"];
                         var i=0;
                         $("#dependcycount").append('<div class="form-group"><label>Select Number of dependencies</label><select class="form-control" name="numdependency" id="numdependency"></select></div">');
@@ -234,6 +236,8 @@
                     url : "{{ url_for('config') }}",
                     dataType: 'json',
                     success: function(data){
+                        // console.log("List")
+                        // console.log(data)
                         var services=data["dependencies"];
                         count=$("#numdependency").val();
                         $("#dependcylist").append('<p> Select Dependencies</p>');
