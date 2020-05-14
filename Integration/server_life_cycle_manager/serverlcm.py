@@ -91,15 +91,15 @@ def allocate_new_machine():
 
 def allocate_server_kernel(serviceid):
 	global testing_new_machine
-	# result,ip,username,password,port = load_balance()
-	# print("Result: {}".format(result))
-	# if(testing_new_machine or result=="NO MACHINE"):
-	# 	print("allocate new machine")
-	# 	result,ip,username,password,port = allocate_new_machine()
+	result,ip,username,password,port = load_balance()
+	print("Result: {}".format(result))
+	if(testing_new_machine or result=="NO MACHINE"):
+		print("allocate new machine")
+		result,ip,username,password,port = allocate_new_machine()
 
-	# data={"result":result,"serviceid": serviceid,"serverip":ip,"machineusername":username,"password":password,"sshPort":port}
+	data={"result":result,"serviceid": serviceid,"serverip":ip,"machineusername":username,"password":password,"sshPort":port}
 
-	data={"result":"ok","serviceid": serviceid,"serverip":"13.68.206.239","machineusername":"ias","password":"Asdfghjkl@123","sshPort":"22"}
+# 	data={"result":"ok","serviceid": serviceid,"serverip":"13.68.206.239","machineusername":"ias","password":"Asdfghjkl@123","sshPort":"22"}
 	print(data)
 	r=requests.post(url="http://"+service_life_cycle_ip+":"+str(service_life_cycle_port)+"/servicelcm/service/update",json=data)
 	# print(r.json())
