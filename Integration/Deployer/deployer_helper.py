@@ -90,7 +90,7 @@ def getSensorTopic(username,application_name,service_name,serviceid,config_path)
 	configfile = open(config_path, 'r')
 	config = json.load(configfile)
 	configfile.close()
-	URL = "http://127.0.0.1:6000/sensormanager"
+	URL = "http://localhost:5050/sensormanager"
 	req = {
 		'username' : username,
 		'applicationname' : application_name,
@@ -102,7 +102,7 @@ def getSensorTopic(username,application_name,service_name,serviceid,config_path)
 	return res.json()
 
 def notifyActionManager(username,application_name,servicename,serviceid,config_path,sensor_host):
-	URL = "http://127.0.0.1:7000/actionmanager"
+	URL = "http://localhost:5052/actionmanager"
 	configfile = open(config_path, 'r')
 	config = json.load(configfile)
 	configfile.close()
